@@ -1,0 +1,70 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sabnzbd
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: sabnzbd
+  interval: 1h
+  values:
+    controllers:
+      sabnzbd:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/home-operations/sabnzbd
+              tag: 4.5.5@sha256:da57e01cdebc547852b6df85c8df8c0e4d87792742c7608c5590dc653b184e8c
+            env:
+              TZ: America/Los_Angeles
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 4Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+        strategy: Recreate
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        annotations:
+          lbipam.ciliu,io/ips: 192.168.2.10
+        externalTrafficPolicy: Local
+        ports:
+          http:
+            port: 8080
+        type: LoadBalancer
+    route:
+      app:
+        hostnames:
+        - "{{ .Release.Name }}.brenix.com"
+        parentRefs:
+        - name: envoy-internal
+          namespace: network
+    persistence:
+      config:
+        existingClaim: "{{ .Release.Name }}"
+      downloads:
+        type: nfs
+        server: truenas.home.arpa
+        path: /mnt/main/media/downloads
+        globalMounts:
+        - path: /downloads/complete
+          subPath: complete
+      incomplete:
+        type: emptyDir
+        globalMounts:
+        - path: /downloads/incomplete

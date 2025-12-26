@@ -1,0 +1,100 @@
+---
+clusterName: kubernetes
+
+talosVersion: "${talosVersion}"
+kubernetesVersion: "${kubernetesVersion}"
+
+endpoint: https://192.168.1.50:6443
+additionalApiServerCertSans: &sans
+- "127.0.0.1"
+- "192.168.1.50"
+- "k8s.home.arpa"
+additionalMachineCertSans: *sans
+
+clusterPodNets:
+- "10.244.0.0/16"
+clusterSvcNets:
+- "10.96.0.0/16"
+
+# Disable built-in CNI to use Cilium
+cniConfig:
+  name: none
+
+nodes:
+# TODO
+- hostname: "k01"
+  ipAddress: "192.168.1.51"
+  installDiskSelector:
+    serial: "CT500P3PSSD8"
+  machineSpec:
+    secureboot: false
+  talosImageURL: factory.talos.dev/installer/
+  controlPlane: true
+  networkInterfaces:
+  - deviceSelector:
+      hardwareAddr: "00:00:00:00:00:01"
+    dhcp: false
+    addresses:
+    - "192.168.1.51/24"
+    routes:
+    - network: "0.0.0.0/0"
+      gateway: "192.168.1.1"
+    mtu: 1500
+    vip:
+      ip: "192.168.1.50"
+- hostname: "k02"
+  ipAddress: "192.168.1.52"
+  installDiskSelector:
+    serial: "CT500P3PSSD8"
+  machineSpec:
+    secureboot: false
+  talosImageURL: factory.talos.dev/installer/
+  controlPlane: true
+  networkInterfaces:
+  - deviceSelector:
+      hardwareAddr: "00:00:00:00:00:02"
+    dhcp: false
+    addresses:
+    - "192.168.1.52/24"
+    routes:
+    - network: "0.0.0.0/0"
+      gateway: "192.168.1.1"
+    mtu: 1500
+    vip:
+      ip: "192.168.1.50"
+- hostname: "k03"
+  ipAddress: "192.168.1.53"
+  installDiskSelector:
+    serial: "CT500P3PSSD8"
+  machineSpec:
+    secureboot: false
+  talosImageURL: factory.talos.dev/installer/
+  controlPlane: true
+  networkInterfaces:
+  - deviceSelector:
+      hardwareAddr: "00:00:00:00:00:03"
+    dhcp: false
+    addresses:
+    - "192.168.1.53/24"
+    routes:
+    - network: "0.0.0.0/0"
+      gateway: "192.168.1.1"
+    mtu: 1500
+    vip:
+      ip: "192.168.1.50"
+
+# Global patches
+# TODO
+patches:
+- "@./patches/global/machine-files.yaml"
+- "@./patches/global/machine-kubelet.yaml"
+- "@./patches/global/machine-network.yaml"
+- "@./patches/global/machine-sysctls.yaml"
+- "@./patches/global/machine-time.yaml"
+
+# Controller patches
+# TODO
+controlPlane:
+  patches:
+  - "@./patches/controller/cluster.yaml"
+

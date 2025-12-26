@@ -1,0 +1,12 @@
+---
+creation_rules:
+- path_regex: talos/.*\.sops\.ya?ml
+  mac_only_encrypted: true
+  age: "age18l5m9p0j8d42cq85qjcczqptjxhr3ygg58qj6smda85yqcqsxy2qds97a0,age1kky7jzc2x626xp4sfvpz7acytczqgdn7h2jxjqkjxzfd4kndcdxs8zr6ka" # home-ops,brenix
+- path_regex: (bootstrap|kubernetes)/.*\.sops\.ya?ml
+  encrypted_regex: "^(data|stringData)$"
+  mac_only_encrypted: true
+  age: "age18l5m9p0j8d42cq85qjcczqptjxhr3ygg58qj6smda85yqcqsxy2qds97a0,age1kky7jzc2x626xp4sfvpz7acytczqgdn7h2jxjqkjxzfd4kndcdxs8zr6ka" # home-ops,brenix
+stores:
+  yaml:
+    indent: 2

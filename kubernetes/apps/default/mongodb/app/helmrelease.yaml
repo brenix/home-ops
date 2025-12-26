@@ -1,0 +1,61 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mongodb
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: mongodb
+  interval: 1h
+  values:
+    controllers:
+      mongodb:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: docker.io/library/mongo
+              tag: 8.0@sha256:b371a6f3831acc9f89c3a5ddcfd81f833a13d907057a87c7b31095e66f0473a3
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 1Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+        type: statefulset
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        ports:
+          http:
+            enabled: false
+          mongodb:
+            enabled: true
+            port: 27017
+            primary: true
+            protocol: TCP
+        type: ClusterIP
+    persistence:
+      data:
+        enabled: true
+        existingClaim: "{{ .Release.Name }}-data"
+        globalMounts:
+        - path: /data/db
+      initdb:
+        enabled: true
+        globalMounts:
+        - path: /docker-entrypoint-initdb.d
+        name: mongodb-init
+        type: secret

@@ -1,0 +1,10 @@
+.private/
+*.key
+*.decrypted~*.yaml
+kubeconfig
+talosconfig
+.private/
+.task/
+.venv/
+.DS_Store
+Thumbs.db

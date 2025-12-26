@@ -1,0 +1,89 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sonarr
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: sonarr
+  interval: 1h
+  values:
+    controllers:
+      sonarr:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/home-operations/sonarr
+              tag: 4.0.16.2946@sha256:3597fd572f4599c67abbeb8afd3cb85bce8a9e389f0779b7ea1273781544d15c
+            env:
+              SONARR__APP__INSTANCENAME: Sonarr
+              SONARR__APP__THEME: light
+              SONARR__AUTH__METHOD: External
+              SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              SONARR__LOG__DBENABLED: "False"
+              SONARR__LOG__LEVEL: info
+              SONARR__SERVER__PORT: &port 80
+              SONARR__UPDATE__BRANCH: develop
+              TZ: America/Los_Angeles
+            envFrom:
+            - secretRef:
+                name: "{{ .Release.Name }}"
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                memory: 4Gi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        ports:
+          http:
+            port: *port
+    route:
+      app:
+        hostnames:
+        - "{{ .Release.Name }}.brenix.com"
+        parentRefs:
+        - name: envoy-internal
+          namespace: network
+    persistence:
+      config:
+        existingClaim: "{{ .Release.Name }}-data"
+      cache:
+        existingClaim: "{{ .Release.Name }}-cache"
+      media:
+        type: nfs
+        server: truenas.home.arpa
+        path: /mnt/main/media
+        globalMounts:
+        - path: /media
+        - path: /downloads
+          subPath: downloads
+      tmp:
+        type: emptyDir

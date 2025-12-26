@@ -1,0 +1,11 @@
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: cloudflare-tunnel
+spec:
+  endpoints:
+  - dnsName: "external.brenix.com"
+    recordType: CNAME
+    targets:
+    - "15851463-2228-4232-ba56-b76860c39d8c.cfargotunnel.com"

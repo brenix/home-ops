@@ -1,0 +1,6 @@
+---
+machine:
+  time:
+    disabled: false
+    servers:
+    - 192.168.1.1

@@ -1,0 +1,73 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: stirling-pdf
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: stirling-pdf
+  interval: 1h
+  values:
+    controllers:
+      stirling-pdf:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/stirling-tools/stirling-pdf
+              tag: 2.1.5@sha256:e8b96ebd749ee6c087f853c31fbbb79dc35bb08792bdd5ef0e72e74f5b209ea1
+            envFrom:
+            - secretRef:
+                name: "{{ .Release.Name }}"
+            env:
+              TZ: America/Los_Angeles
+              MODE: BOTH
+              DOCKER_ENABLE_SECURITY: "false"
+              METRICS_ENABLED: "false"
+              SYSTEM_ENABLEANALYTICS: "false"
+              SYSTEM_GOOGLEVISIBILITY: "false"
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 768Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        annotations:
+          lbipam.ciliu,io/ips: 192.168.2.14
+        externalTrafficPolicy: Local
+        ports:
+          http:
+            port: 8080
+        type: LoadBalancer
+    route:
+      app:
+        hostnames:
+        - "pdf.brenix.com"
+        parentRefs:
+        - name: envoy-internal
+          namespace: network
+    persistence:
+      tmpfs:
+        type: emptyDir
+        globalMounts:
+        - path: /logs
+          subPath: logs
+        - path: /pipeline
+          subPath: pipeline
+        - path: /tmp
+          subPath: tmp

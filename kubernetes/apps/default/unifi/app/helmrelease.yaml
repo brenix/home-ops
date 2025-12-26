@@ -1,0 +1,99 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: unifi
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: unifi
+  interval: 1h
+  values:
+    controllers:
+      unifi:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: lscr.io/linuxserver/unifi-network-application
+              tag: 10.0.162@sha256:83a0d9cf6ed075ec666c484dd75e12c3b3224e4c2d6d9cb44257bb06a2456029
+            env:
+              MONGO_DBNAME: unifi
+              MONGO_HOST: mongodb.default.svc.cluster.local
+              MONGO_PORT: 27017
+              PGID: 1000
+              PUID: 1000
+              TZ: America/Los_Angeles
+            envFrom:
+            - secretRef:
+                name: unifi
+            resources:
+              requests:
+                cpu: 50m
+                memory: 768Mi
+              limits:
+                memory: 4Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+        strategy: Recreate
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        annotations:
+          lbipam.ciliu,io/ips: 192.168.2.2
+        externalTrafficPolicy: Local
+        ports:
+          http:
+            port: 8443
+            protocol: HTTPS
+            appProtocol: https
+          controller:
+            enabled: true
+            port: 8080
+            protocol: TCP
+          portal-http:
+            enabled: false
+            port: 8880
+            protocol: HTTP
+          portal-https:
+            enabled: false
+            port: 8843
+            protocol: HTTPS
+          speedtest:
+            enabled: true
+            port: 6789
+            protocol: TCP
+          stun:
+            enabled: true
+            port: 3478
+            protocol: UDP
+          syslog:
+            enabled: true
+            port: 5514
+            protocol: UDP
+          discovery:
+            enabled: true
+            port: 10001
+            protocol: UDP
+        type: LoadBalancer
+    route:
+      app:
+        hostnames:
+        - "{{ .Release.Name }}.brenix.com"
+        parentRefs:
+        - name: envoy-internal
+          namespace: network
+    persistence:
+      data:
+        existingClaim: "{{ .Release.Name }}-data"
+        globalMounts:
+        - path: /config
