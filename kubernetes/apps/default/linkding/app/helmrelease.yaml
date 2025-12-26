@@ -1,0 +1,62 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: linkding
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: linkding
+  interval: 1h
+  values:
+    controllers:
+      linkding:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/sissbruecker/linkding
+              tag: 1.44.2@sha256:2883e8b30f02d8dbd2b79d7fd813dff02971b70742e474d0e18f0c3708d22edd
+            envFrom:
+            - secretRef:
+                name: "{{ .Release.Name }}"
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 512Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+        strategy: Recreate
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        annotations:
+          lbipam.ciliu,io/ips: 192.168.2.9
+        externalTrafficPolicy: Local
+        ports:
+          http:
+            port: 9090
+        type: LoadBalancer
+    route:
+      app:
+        hostnames:
+        - "{{ .Release.Name }}.brenix.com"
+        parentRefs:
+        - name: envoy-internal
+          namespace: network
+    persistence:
+      data:
+        existingClaim: "{{ .Release.Name }}-data"
+        globalMounts:
+        - path: /etc/linkding/data

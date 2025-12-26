@@ -1,0 +1,22 @@
+[env]
+DIFF= "dyff between --omit-header --color on"
+KUBECONFIG = "{{config_root}}/.private/kubeconfig"
+SOPS_AGE_KEY_FILE = "{{config_root}}/.private/age.key"
+TALOSCONFIG = "{{config_root}}/talos/clusterconfig/talosconfig"
+
+[tools]
+"age" = "1.2.1"
+"cilium-cli" = "0.18.9"
+"dyff" = "latest"
+"flux2" = "2.7.5"
+"helm" = "4.0.4"
+"helmfile" = "1.2.3"
+"kubeconform" = "0.7.0"
+"kustomize" = "latest"
+"pipx" = "latest"
+"pipx:flux-local" = "8.1.0"
+"sops" = "3.11.0"
+"talhelper" = "3.0.43"
+"talos" = "1.10.9"
+"task" = "3.46.4"
+yamlfmt = "0.20.0"

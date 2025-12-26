@@ -1,0 +1,86 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: jellyfin
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: jellyfin
+  interval: 1h
+  values:
+    controllers:
+      jellyfin:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/jellyfin/jellyfin
+              tag: 10.11.5@sha256:cd7e4cb71812dd76988a725da615e37c6d0d24c200be904ad5d183e51f1dc6ed
+            env:
+              TZ: America/Los_Angeles
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &port 8096
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            resources:
+              requests:
+                cpu: 10m
+                memory: 512Mi
+              limits:
+                memory: 8Gi
+            securityContext:
+              privileged: true # Needed for hardware acceleration
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        annotations:
+          lbipam.ciliu,io/ips: 192.168.2.7
+        externalTrafficPolicy: Local
+        ports:
+          http:
+            port: *port
+            appProtocol: kubernetes.io/ws
+        type: LoadBalancer
+    route:
+      app:
+        hostnames:
+        - "{{ .Release.Name }}.brenix.com"
+        parentRefs:
+        - name: envoy-external
+          namespace: network
+    persistence:
+      config:
+        existingClaim: "{{ .Release.Name }}-data"
+      cache:
+        existingClaim: "{{ .Release.Name }}-cache"
+        globalMounts:
+        - path: /config/cache
+      media:
+        type: nfs
+        server: truenas.home.arpa
+        path: /mnt/main/media
+        globalMounts:
+        - path: /media
+      transcode:
+        type: emptyDir
+      dri:
+        type: hostPath
+        hostPathType: Directory
+        hostPath: /dev/dri
