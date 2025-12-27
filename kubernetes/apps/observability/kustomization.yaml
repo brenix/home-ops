@@ -4,11 +4,7 @@ kind: Kustomization
 namespace: observability
 resources:
 - ./namespace.yaml
-# TODO
-# - ./blackbox-exporter/ks.yaml
-# - ./grafana/ks.yaml
-# - ./healthchecks-ping/ks.yaml
-# - ./kube-prometheus-stack/ks.yaml
-# - ./node-feature-discovery/ks.yaml
-# - ./ping-exporter/ks.yaml
-# - ./unpoller/ks.yaml
+- ./grafana/ks.yaml
+- ./healthchecks-ping/ks.yaml
+- ./kube-prometheus-stack/ks.yaml
+- ./ping-exporter/ks.yaml

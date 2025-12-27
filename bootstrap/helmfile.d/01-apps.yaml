@@ -6,7 +6,6 @@ helmDefaults:
   waitForJobs: true
 
 releases:
-# TODO
 - name: cilium
   namespace: kube-system
   chart: oci://ghcr.io/home-operations/charts-mirror/cilium

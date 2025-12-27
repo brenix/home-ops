@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: healthchecks-ping
+spec:
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 300
+      template:
+        spec:
+          containers:
+          - args:
+            - $(HC_URL)
+            env:
+            - name: HC_URL
+              valueFrom:
+                secretKeyRef:
+                  key: url
+                  name: healthchecks-ping
+            image: cgr.dev/chainguard/curl:latest
+            imagePullPolicy: Always
+            name: healthcheck-ping
+  schedule: '*/20 * * * *'
+  successfulJobsHistoryLimit: 1
+  suspend: false
