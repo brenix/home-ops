@@ -3,6 +3,7 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: tuppr
+  namespace: system-upgrade
 spec:
   interval: 1h
   path: ./kubernetes/apps/system-upgrade/tuppr/app
@@ -18,6 +19,7 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: tuppr-upgrades
+  namespace: system-upgrade
 spec:
   dependsOn:
   - name: tuppr
