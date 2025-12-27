@@ -5,13 +5,13 @@ metadata:
   name: grafana
 spec:
   endpoints:
-    - port: grafana
-      path: /metrics
-      honorLabels: true
+  - port: grafana
+    path: /metrics
+    honorLabels: true
   jobLabel: grafana
   namespaceSelector:
     matchNames:
-      - observability
+    - observability
   selector:
     matchLabels:
       grafana.internal/instance: grafana

@@ -19,6 +19,9 @@ spec:
       name: kube-dns
       clusterIP: "10.96.0.10"
     replicaCount: 2
+    resources:
+      limits:
+        cpu: null
     servers:
     - zones:
       - zone: .
@@ -36,11 +39,16 @@ spec:
         configBlock: |-
           pods verified
           fallthrough in-addr.arpa ip6.arpa
+      - name: template
+        parameters: IN AAAA
+        configBlock: |-
+          rcode NOERROR
       - name: autopath
         parameters: "@kubernetes"
       - name: forward
         parameters: . /etc/resolv.conf
       - name: cache
+        parameters: 300
         configBlock: |-
           prefetch 20
           serve_stale

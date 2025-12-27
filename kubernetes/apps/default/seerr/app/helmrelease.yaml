@@ -16,10 +16,8 @@ spec:
         containers:
           app:
             image:
-              # TODO: Update repository once fully ported to https://github.com/seerr-team/seerr
-              # repository: ghcr.io/seerr-team/seerr
-              repository: ghcr.io/fallenbagel/jellyseerr
-              tag: 2.7.3@sha256:499fbe958fa4a0c93172a231c14898986556bb28bd5cd569a0f41dbf887b04d7
+              repository: ghcr.io/seerr-team/seerr
+              tag: develop@sha256:ffd4995fc11f65f23705de19c4f9206eaeec405c2bdc7ac3e6977a1520a09c5a
             env:
               LOG_LEVEL: info
               TZ: America/Los_Angeles
