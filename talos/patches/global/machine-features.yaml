@@ -1,0 +1,19 @@
+---
+machine:
+  features:
+    # Enable Host DNS
+    hostDNS:
+      enabled: true
+      resolveMemberNames: true
+      forwardKubeDNSToHost: false
+    # Enable API access for system-upgrade
+    kubernetesTalosAPIAccess:
+      enabled: true
+      allowedRoles:
+      - os:admin
+      allowedKubernetesNamespaces:
+      - system-upgrade
+    # Enable kubeprism
+    kubePrism:
+      enabled: true
+      port: 7445

@@ -21,18 +21,17 @@ cniConfig:
   name: none
 
 nodes:
-# TODO
 - hostname: "k01"
   ipAddress: "192.168.1.51"
   installDiskSelector:
     serial: "CT500P3PSSD8"
   machineSpec:
     secureboot: false
-  talosImageURL: factory.talos.dev/installer/
+  talosImageURL: factory.talos.dev/installer/7545b3eddee40c81816011818d49ad819ccd3ff1f489422572a1f9831ca2eb98
   controlPlane: true
   networkInterfaces:
   - deviceSelector:
-      hardwareAddr: "00:00:00:00:00:01"
+      hardwareAddr: "e8:ff:1e:d7:c7:7d"
     dhcp: false
     addresses:
     - "192.168.1.51/24"
@@ -48,11 +47,11 @@ nodes:
     serial: "CT500P3PSSD8"
   machineSpec:
     secureboot: false
-  talosImageURL: factory.talos.dev/installer/
+  talosImageURL: factory.talos.dev/installer/7545b3eddee40c81816011818d49ad819ccd3ff1f489422572a1f9831ca2eb98
   controlPlane: true
   networkInterfaces:
   - deviceSelector:
-      hardwareAddr: "00:00:00:00:00:02"
+      hardwareAddr: "e8:ff:1e:d7:c7:f9"
     dhcp: false
     addresses:
     - "192.168.1.52/24"
@@ -68,11 +67,11 @@ nodes:
     serial: "CT500P3PSSD8"
   machineSpec:
     secureboot: false
-  talosImageURL: factory.talos.dev/installer/
+  talosImageURL: factory.talos.dev/installer/7545b3eddee40c81816011818d49ad819ccd3ff1f489422572a1f9831ca2eb98
   controlPlane: true
   networkInterfaces:
   - deviceSelector:
-      hardwareAddr: "00:00:00:00:00:03"
+      hardwareAddr: "e8:ff:1e:d7:c7:6f"
     dhcp: false
     addresses:
     - "192.168.1.53/24"
@@ -84,7 +83,6 @@ nodes:
       ip: "192.168.1.50"
 
 # Global patches
-# TODO
 patches:
 - "@./patches/global/machine-files.yaml"
 - "@./patches/global/machine-kubelet.yaml"
@@ -93,8 +91,22 @@ patches:
 - "@./patches/global/machine-time.yaml"
 
 # Controller patches
-# TODO
 controlPlane:
+  schematic:
+    customization:
+      extraKernelArgs:
+      - -init_on_alloc
+      - -init_on_free
+      - -selinux
+      - apparmor=0
+      - init_on_alloc=0
+      - init_on_free=0
+      - mitigations=off
+      - talos.auditd.disabled=1
+      systemExtensions:
+        officialExtensions:
+        - siderolabs/amd-ucode
+        - siderolabs/amdgpu
   patches:
   - "@./patches/controller/cluster.yaml"
 

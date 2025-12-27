@@ -13,7 +13,6 @@ helmDefaults:
   - yq eval-all --exit-status 'select(.kind == "CustomResourceDefinition")'
 
 releases:
-# TODO
 - name: cloudflare-dns
   namespace: network
   chart: oci://ghcr.io/home-operations/charts-mirror/external-dns

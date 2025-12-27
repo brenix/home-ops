@@ -4,3 +4,7 @@ machine:
     disableSearchDomain: true
     nameservers:
     - 192.168.1.1
+    extraHostEntries:
+    - ip: 192.168.1.50
+      aliases:
+      - k8s.home.arpa
