@@ -51,7 +51,7 @@ spec:
     service:
       app:
         annotations:
-          lbipam.ciliu,io/ips: 192.168.2.7
+          lbipam.cilium.io/ips: 192.168.2.7
         externalTrafficPolicy: Local
         ports:
           http:

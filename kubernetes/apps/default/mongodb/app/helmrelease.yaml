@@ -39,8 +39,6 @@ spec:
     service:
       app:
         ports:
-          http:
-            enabled: false
           mongodb:
             enabled: true
             port: 27017
