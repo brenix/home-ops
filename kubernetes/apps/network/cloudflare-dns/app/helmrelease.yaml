@@ -17,9 +17,14 @@ spec:
         secretKeyRef:
           name: &secret cloudflare-dns-secret
           key: api-token
+    - name: CF_API_EMAIL
+      valueFrom:
+        secretKeyRef:
+          name: *secret
+          key: api-email
     extraArgs:
     - --cloudflare-dns-records-per-page=1000
-    - --cloudflare-proxied
+    # - --cloudflare-proxied
     - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
     - --crd-source-kind=DNSEndpoint
     - --gateway-name=envoy-external
@@ -28,6 +33,10 @@ spec:
     sources:
     - "crd"
     - "gateway-httproute"
+    - "gateway-grpcroute"
+    - "gateway-tlsroute"
+    - "gateway-tcproute"
+    - "gateway-udproute"
     txtPrefix: k8s.
     txtOwnerId: default
     domainFilters:
