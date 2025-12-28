@@ -29,6 +29,10 @@ spec:
                 name: "{{ .Release.Name }}"
             args:
             - sync
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
             resources:
               requests:
                 cpu: 10m
@@ -36,6 +40,13 @@ spec:
                 memory: 128Mi
         pod:
           restartPolicy: Never
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     persistence:
       config:
         existingClaim: "{{ .Release.Name }}"
