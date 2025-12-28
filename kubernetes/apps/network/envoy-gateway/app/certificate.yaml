@@ -8,7 +8,7 @@ spec:
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: "${SECRET_DOMAIN}"
+  commonName: brenix.com
   dnsNames:
   - brenix.com
   - "*.brenix.com"
