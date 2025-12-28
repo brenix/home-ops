@@ -23,6 +23,7 @@ spec:
             image: cgr.dev/chainguard/curl:latest
             imagePullPolicy: Always
             name: healthcheck-ping
+          restartPolicy: Never
   schedule: '*/20 * * * *'
   successfulJobsHistoryLimit: 1
   suspend: false
