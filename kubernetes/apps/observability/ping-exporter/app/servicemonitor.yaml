@@ -1,0 +1,25 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: ping-exporter
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: ping-exporter
+      app.kubernetes.io/name: ping-exporter
+  endpoints:
+  - port: http
+    interval: 60s
+    relabelings:
+    - action: labeldrop
+      regex: pod
+      sourceLabels: []
+    - action: labeldrop
+      regex: namespace
+      sourceLabels: []
+    - action: labeldrop
+      regex: instance
+      sourceLabels: []
+    - action: labeldrop
+      regex: job
