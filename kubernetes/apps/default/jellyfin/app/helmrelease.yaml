@@ -20,6 +20,9 @@ spec:
               tag: 10.11.5@sha256:cd7e4cb71812dd76988a725da615e37c6d0d24c200be904ad5d183e51f1dc6ed
             env:
               TZ: America/Los_Angeles
+              # TODO: Move to proper setup. This mimics the linuxserver image
+              JELLYFIN_DATA_DIR: /config/data
+              JELLYFIN_CONFIG_DIR: /config
             probes:
               liveness: &probes
                 enabled: true
