@@ -10,10 +10,15 @@ spec:
   interval: 1h
   values:
     autoDirectNodeRoutes: true
+    bandwidthManager:
+      bbr: true
+      enabled: true
     bpf:
+      dataPathMode: netkit
       masquerade: true
+      preallocateMaps: true
       # Ref: https://github.com/siderolabs/talos/issues/10002
-      hostLegacyRouting: true
+      # hostLegacyRouting: true
     bgpControlPlane:
       enabled: true
     cni:
@@ -23,14 +28,15 @@ spec:
       automount:
         enabled: false
       hostRoot: /sys/fs/cgroup
-    # NOTE: devices might need to be set if you have more than one active NIC on your hosts
-    # devices: eno+ eth+
+    devices: eno+
     dashboards:
       enabled: true
     endpointRoutes:
       enabled: true
     envoy:
       enabled: false
+    externalIPs:
+      enabled: true
     gatewayAPI:
       enabled: false
     hubble:
@@ -38,6 +44,8 @@ spec:
     ipam:
       mode: kubernetes
     ipv4NativeRoutingCIDR: "10.244.0.0/16"
+    k8sNetworkPolicy:
+      enabled: false
     k8sServiceHost: 127.0.0.1
     k8sServicePort: 7445
     kubeProxyReplacement: true
