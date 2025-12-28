@@ -36,13 +36,9 @@ spec:
                 memory: 768Mi
     service:
       app:
-        annotations:
-          lbipam.cilium.io/ips: 192.168.2.14
-        externalTrafficPolicy: Local
         ports:
           http:
             port: 8080
-        type: LoadBalancer
     route:
       app:
         hostnames:

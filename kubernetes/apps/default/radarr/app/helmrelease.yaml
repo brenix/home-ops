@@ -25,7 +25,7 @@ spec:
               RADARR__AUTH__REQUIRED: DisabledForLocalAddresses
               RADARR__LOG__DBENABLED: "False"
               RADARR__LOG__LEVEL: info
-              RADARR__SERVER__PORT: &port 80
+              RADARR__SERVER__PORT: &port 7878
               RADARR__UPDATE__BRANCH: develop
               TZ: America/Los_Angeles
             envFrom:
@@ -62,13 +62,9 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        annotations:
-          lbipam.cilium.io/ips: 192.168.2.3
-        externalTrafficPolicy: Local
         ports:
           http:
             port: *port
-        type: LoadBalancer
     route:
       app:
         hostnames:

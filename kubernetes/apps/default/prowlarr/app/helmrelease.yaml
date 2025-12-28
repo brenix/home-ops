@@ -25,7 +25,7 @@ spec:
               PROWLARR__AUTH__REQUIRED: DisabledForLocalAddresses
               PROWLARR__LOG__DBENABLED: "False"
               PROWLARR__LOG__LEVEL: info
-              PROWLARR__SERVER__PORT: &port 80
+              PROWLARR__SERVER__PORT: &port 9696
               PROWLARR__UPDATE__BRANCH: develop
               TZ: America/Los_Angeles
             envFrom:
@@ -62,13 +62,9 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        annotations:
-          labipam.cilium.io/ips: 192.168.2.5
-        externalTrafficPolicy: Local
         ports:
           http:
             port: *port
-        type: LoadBalancer
     route:
       app:
         hostnames:
