@@ -1,0 +1,73 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: navidrome
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: navidrome
+  interval: 1h
+  values:
+    controllers:
+      navidrome:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/navidrome/navidrome
+              tag: 0.59.0@sha256:97533639adaafd3b968d9a3736895945ddf0ed7b4dec3a6102af334274cb7083
+            env:
+              ND_ENABLEINSIGHTSCOLLECTOR: "false"
+              ND_DATAFOLDER: /data
+              ND_ENABLEDOWNLOADS: "false"
+              ND_ENABLEEXTERNALSERVICES: "false"
+              ND_ENABLESHARING: "false"
+              ND_ENABLESTARRATING: "false"
+              ND_LOGLEVEL: info
+              ND_MUSICFOLDER: /music
+              ND_PORT: &port 4533
+              ND_SCANSCHEDULE: 30m
+              ND_BASEURL: https://music.brenix.com
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 512Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        ports:
+          http:
+            port: *port
+    route:
+      app:
+        hostnames:
+        - "music.brenix.com"
+        parentRefs:
+        - name: envoy-internal
+          namespace: network
+    persistence:
+      config:
+        existingClaim: "{{ .Release.Name }}-data"
+        globalMounts:
+        - path: /data
+      music:
+        type: nfs
+        server: truenas.home.arpa
+        path: /mnt/main/media
+        globalMounts:
+        - path: /music
+          subPath: music

@@ -9,6 +9,8 @@ resources:
 - ./jellyfin/ks.yaml
 - ./linkding/ks.yaml
 - ./mongodb/ks.yaml
+- ./mumble/ks.yaml
+- ./navidrome/ks.yaml
 - ./prowlarr/ks.yaml
 - ./radarr/ks.yaml
 - ./recyclarr/ks.yaml
@@ -17,7 +19,3 @@ resources:
 - ./sonarr/ks.yaml
 - ./stirling-pdf/ks.yaml
 - ./unifi/ks.yaml
-# - ./slskd/ks.yaml
-# - ./mumble/ks.yaml
-# - ./navidrome/ks.yaml
-# - ./pacoloco/ks.yaml

@@ -1,0 +1,66 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mumble
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: mumble
+  interval: 1h
+  values:
+    controllers:
+      mumble:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/mumble-voip/mumble-server
+              tag: v1.5.857@sha256:b4f5d4634bf0f8a03eec8ed066ffae78cf646a156c55c92504e8cc442ec6ccd2
+            env:
+              MUMBLE_ACCEPT_UNKNOWN_SETTINGS: false
+              MUMBLE_VERBOSE: false
+              PUID: 1000
+              PGID: 1000
+            envFrom:
+            - secretRef:
+                name: "{{ .Release.Name }}"
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 512Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+        strategy: Recreate
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: mumble.brenix.com
+          external-dns.alpha.kubernetes.io/target: external.brenix.com
+          lbipam.cilium.io/ips: 192.168.2.17
+        externalTrafficPolicy: Local
+        ports:
+          mumble-tcp:
+            enabled: true
+            port: 64738
+            primary: true
+            protocol: TCP
+          mumble-udp:
+            enabled: true
+            port: 64738
+            protocol: UDP
+    persistence:
+      data:
+        existingClaim: "{{ .Release.Name }}-data"
