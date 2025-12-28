@@ -4,11 +4,14 @@ set shell := ['bash', '-euo', 'pipefail', '-c']
 
 bootstrap_dir := justfile_dir() + '/bootstrap'
 kubernetes_dir := justfile_dir() + '/kubernetes'
+private_dir := justfile_dir() + '/.private'
 controller := `talosctl config info -o yaml | yq -e '.endpoints[0]'`
 nodes := `talosctl config info -o yaml | yq -e '.nodes | join (" ")'`
 
 [private]
-default: talos kube (kubeconfig "node") wait namespaces resources crds apps kubeconfig
+default: kube (kubeconfig "node") wait namespaces resources crds apps kubeconfig
+
+# default: talos kube (kubeconfig "node") wait namespaces resources crds apps kubeconfig
 
 [doc('Install Talos')]
 talos:
@@ -34,7 +37,7 @@ kube:
 [doc('Fetch kubeconfig')]
 kubeconfig lb="cilium":
     just log info "Running stage..." "stage" "$0"
-    if ! talosctl kubeconfig -n "{{ controller }}" -f --force-context-name main {{ justfile_dir() }}; then \
+    if ! talosctl kubeconfig -n "{{ controller }}" -f --force-context-name main "{{ private_dir }}"; then \
         just log fatal "Failed to fetch kubeconfig" "stage" "$0"; \
     fi
     if [[ "{{ lb }}" != "cilium" ]]; then \
