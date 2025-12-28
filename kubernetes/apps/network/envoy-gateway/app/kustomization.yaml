@@ -5,7 +5,8 @@ namespace: network
 resources:
 - ./certificate.yaml
 - ./envoy.yaml
+- ./grafanadashboard.yaml
 - ./helmrelease.yaml
+- ./observability.yaml
 - ./ocirepository.yaml
-- ./podmonitor.yaml
 - ./pushsecret.yaml
