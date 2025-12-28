@@ -44,7 +44,7 @@ spec:
     persistence:
       data:
         enabled: true
-        existingClaim: "{{ .Release.Name }}-data"
+        existingClaim: "mongo-data"
         globalMounts:
         - path: /data/db
       initdb:
