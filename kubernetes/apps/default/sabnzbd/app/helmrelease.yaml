@@ -64,3 +64,5 @@ spec:
         type: emptyDir
         globalMounts:
         - path: /downloads/incomplete
+      tmp:
+        type: emptyDir
