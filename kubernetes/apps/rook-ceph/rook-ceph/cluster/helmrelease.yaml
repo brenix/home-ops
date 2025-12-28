@@ -54,8 +54,14 @@ spec:
           enabled: true
       network:
         provider: host
+        addressRanges:
+          public:
+          - 192.168.1.0/24 # NOTE: 169.254.255.0/24 didn't work /shrug
+          cluster:
+          - 192.168.1.0/24 # NOTE: 169.254.255.0/24 didn't work /shrug
         connections:
           requireMsgr2: true
+        IPFamilyType: "IPv4"
       resources:
         osd:
           limits:
