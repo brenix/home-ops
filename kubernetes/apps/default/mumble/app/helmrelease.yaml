@@ -61,6 +61,7 @@ spec:
             enabled: true
             port: 64738
             protocol: UDP
+        type: LoadBalancer
     persistence:
       data:
         existingClaim: "{{ .Release.Name }}-data"
