@@ -12,7 +12,7 @@ spec:
         kind: HelmRepository
         name: ping-exporter
       interval: 15m
-  releaseName: podinfo
+  releaseName: ping-exporter
   interval: 1h
   values:
     config:
