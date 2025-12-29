@@ -8,7 +8,8 @@ resources:
 - ./namespace.yaml
 - ./cilium/ks.yaml
 - ./coredns/ks.yaml
+- ./k8s-digester/ks.yaml
 - ./metrics-server/ks.yaml
 - ./reloader/ks.yaml
-- ./spegel/ks.yaml
 - ./snapshot-controller/ks.yaml
+- ./spegel/ks.yaml
