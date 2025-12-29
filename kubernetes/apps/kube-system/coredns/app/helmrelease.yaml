@@ -22,6 +22,7 @@ spec:
     resources:
       limits:
         cpu: null
+        memory: 256Mi
     servers:
     - zones:
       - zone: .
