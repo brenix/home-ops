@@ -9,29 +9,30 @@ on:
         description: Dry Run
         default: "false"
         options:
-          - true
-          - false
+        - true
+        - false
         required: true
       logLevel:
         type: choice
         description: Log Level
         default: info
         options:
-          - info
-          - debug
+        - info
+        - debug
         required: true
       version:
         description: Renovate version
         default: latest
         required: false
   schedule:
-    - cron: "0 16 * * *" # Every day at 4PM UTC
+  - cron: "0 16 * * *" # Every day at 4PM UTC
   push:
-    branches: ["main"]
+    branches:
+    - "main"
     paths:
-      - .renovaterc.json5
-      - .renovate/**.json5
-      - .github/workflows/renovate.yaml
+    - .renovaterc.json5
+    - .renovate/**.json5
+    - .github/workflows/renovate.yaml
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
@@ -51,21 +52,21 @@ jobs:
     name: Renovate
     runs-on: ubuntu-latest
     steps:
-      - name: Generate Token
-        uses: actions/create-github-app-token@v2
-        id: app-token
-        with:
-          app-id: "${{ secrets.BOT_APP_ID }}"
-          private-key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
+    - name: Generate Token
+      uses: actions/create-github-app-token@v2
+      id: app-token
+      with:
+        app-id: "${{ secrets.BOT_APP_ID }}"
+        private-key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
 
-      - name: Checkout
-        uses: actions/checkout@v6
-        with:
-          token: "${{ steps.app-token.outputs.token }}"
+    - name: Checkout
+      uses: actions/checkout@v6
+      with:
+        token: "${{ steps.app-token.outputs.token }}"
 
-      - name: Renovate
-        uses: renovatebot/github-action@v44.2.1
-        with:
-          configurationFile: .renovaterc.json5
-          token: "${{ steps.app-token.outputs.token }}"
-          renovate-version: "${{ env.WORKFLOW_RENOVATE_VERSION }}"
+    - name: Renovate
+      uses: renovatebot/github-action@v44.2.1
+      with:
+        configurationFile: .renovaterc.json5
+        token: "${{ steps.app-token.outputs.token }}"
+        renovate-version: "${{ env.WORKFLOW_RENOVATE_VERSION }}"

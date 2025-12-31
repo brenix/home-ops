@@ -5,7 +5,7 @@ metadata:
   name: sops-age
   namespace: flux-system
 stringData:
-  age.agekey: {{.HOME_OPS_SOPS_AGE_KEY}}
+  age.agekey: {? {.HOME_OPS_SOPS_AGE_KEY: ''} : ''}
 ---
 apiVersion: v1
 kind: Secret
@@ -13,4 +13,4 @@ metadata:
   name: doppler-token-auth-api
   namespace: external-secrets
 stringData:
-  dopplerToken: {{.DOPPLER_ESO_TOKEN}}
+  dopplerToken: {? {.DOPPLER_ESO_TOKEN: ''} : ''}
