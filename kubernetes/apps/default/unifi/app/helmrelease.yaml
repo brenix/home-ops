@@ -17,7 +17,7 @@ spec:
           app:
             image:
               repository: lscr.io/linuxserver/unifi-network-application
-              tag: 10.0.162@sha256:83a0d9cf6ed075ec666c484dd75e12c3b3224e4c2d6d9cb44257bb06a2456029
+              tag: 10.0.162@sha256:48a3e91b79410c3919cb3960b35850806417a75997633bbe47d0180414f9ac91
             env:
               MONGO_DBNAME: unifi
               MONGO_HOST: mongodb.default.svc.cluster.local
