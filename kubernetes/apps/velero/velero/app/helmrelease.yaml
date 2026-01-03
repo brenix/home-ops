@@ -18,6 +18,10 @@ spec:
       volumeMounts:
       - mountPath: /target
         name: plugins
+    kubectl:
+      image:
+        repository: docker.io/alpine/kubectl
+        tag: 1.35.0
     metrics:
       serviceMonitor:
         enabled: true
