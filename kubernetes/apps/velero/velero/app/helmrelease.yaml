@@ -1,0 +1,73 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: velero
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: velero
+  interval: 1h
+  values:
+    image:
+      repository: velero/velero
+      tag: v1.17.1@sha256:2687b6d004731393e51bcdf63b53e7ba480fe0840f0995e4462317170f0e2d86
+    initContainers:
+    - name: velero-plugin-for-aws
+      image: velero/velero-plugin-for-aws:v1.13.1
+      volumeMounts:
+      - mountPath: /target
+        name: plugins
+    metrics:
+      serviceMonitor:
+        enabled: true
+      nodeAgentPodMonitor:
+        enabled: true
+      prometheusRule:
+        enabled: true
+    configuration:
+      features: EnableCSI
+      backupStorageLocation:
+      - name: default
+        provider: aws
+        bucket: velero
+        config:
+          region: us-east-1
+          s3Url: http://192.168.1.15:9000
+          s3ForcePathStyle: true
+      logLevel: warning
+      extraEnvVars:
+      - name: TZ
+        value: America/Los_Angeles
+      defaultVolumesToFsBackup: true
+      volumeSnapshotLocation:
+      - name: default
+        provider: aws
+        config:
+          region: us-east-1
+    credentials:
+      existingSecret: velero-minio-credentials
+    backupsEnabled: true
+    snapshotsEnabled: true
+    deployNodeAgent: true
+    schedules:
+      daily:
+        schedule: '@every 24h'
+        template:
+          excludedResources:
+          - challenges.acme.cert-manager.io
+          - orders.acme.cert-manager.io
+          - certificaterequests.cert-manager.io
+          - ciliumendpoints.cilium.io
+          - endpoints
+          - endpointslices
+          - helmcharts.source.toolkit.fluxcd.io
+          - helmreleases.helm.toolkit.fluxcd.io
+          - helmrepositories.source.toolkit.fluxcd.io
+          - kustomizations.kustomize.toolkit.fluxcd.io
+          - ocirepositories.source.toolkit.fluxcd.io
+          includedNamespaces:
+          - '*'
+          ttl: 72h0m0s
+          snapshotMoveData: true
+          snapshotVolumes: true
