@@ -18,6 +18,7 @@ spec:
       volumeMounts:
       - mountPath: /target
         name: plugins
+    upgradeCRDs: false
     kubectl:
       image:
         repository: docker.io/alpine/kubectl
