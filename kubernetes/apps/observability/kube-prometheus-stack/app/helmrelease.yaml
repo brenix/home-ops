@@ -27,7 +27,7 @@ spec:
           volumeClaimTemplate:
             metadata:
               labels:
-                velero.io/exclude-from-backup: true
+                velero.io/exclude-from-backup: "true"
             spec:
               storageClassName: ceph-block
               resources:
@@ -76,7 +76,7 @@ spec:
           volumeClaimTemplate:
             metadata:
               labels:
-                velero.io/exclude-from-backup: true
+                velero.io/exclude-from-backup: "true"
             spec:
               storageClassName: ceph-block
               resources:
