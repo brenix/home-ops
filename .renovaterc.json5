@@ -8,11 +8,10 @@
     ":dependencyDashboard",
     ":disableRateLimiting",
     ":semanticCommits",
-    ":prImmediately",
   ],
   dependencyDashboard: true,
   dependencyDashboardTitle: "Renovate Dashboard :robot:",
-  schedule: ["every day"],
+  schedule: ["once a day"],
   ignorePaths: ["**/*.sops.*"],
   flux: {
     managerFilePatterns: ["/(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$/"],
