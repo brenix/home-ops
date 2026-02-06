@@ -1,0 +1,8 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: ping-exporter
+spec:
+  interval: 15m
+  url: https://czerwonk.github.io/ping_exporter
