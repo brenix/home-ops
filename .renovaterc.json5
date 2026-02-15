@@ -50,7 +50,7 @@
       automerge: true,
       automergeType: "branch",
       matchUpdateTypes: ["minor", "patch", "digest"],
-      minimumReleaseAge: "3 days",
+      minimumReleaseAge: "0 days",
       ignoreTests: true,
     },
     {
