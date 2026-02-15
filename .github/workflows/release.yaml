@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Generate Token
-      uses: actions/create-github-app-token@v2
+      uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf # v2
       id: app-token
       with:
         app-id: "${{ secrets.BOT_APP_ID }}"
@@ -20,7 +20,7 @@ jobs:
 
     - name: Get Previous Release Tag and Determine Next Tag
       id: determine-next-tag
-      uses: actions/github-script@v8
+      uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
       with:
         github-token: "${{ steps.app-token.outputs.token }}"
         result-encoding: string
@@ -54,7 +54,7 @@ jobs:
           return `${nextMajorMinor}.${nextPatch}`;
 
     - name: Create Release
-      uses: actions/github-script@v8
+      uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
       with:
         github-token: "${{ steps.app-token.outputs.token }}"
         script: |-
