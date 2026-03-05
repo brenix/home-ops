@@ -1,0 +1,57 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: forgejo
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: forgejo
+  interval: 1h
+  values:
+    replicaCount: 1
+    gitea:
+      admin:
+        existingSecret: gitea-admin
+      config:
+        cache:
+          ADAPTER: memory
+        database:
+          DB_TYPE: sqlite3
+        queue:
+          TYPE: level
+        server:
+          DOMAIN: git.brenix.com
+          ROOT_URL: https://git.brenix.com
+          SSH_DOMAIN: git.brenix.com
+      session:
+        PROVIDER: memory
+    persistence:
+      enabled: true
+      create: false
+      claimName: forgejo-data
+    httpRoute:
+      enabled: true
+      hostnames:
+      - git.brenix.com
+      parentRefs:
+      - name: envoy-internal
+        namespace: network
+        sectionName: https
+    postgresql:
+      enabled: false
+    postgresql-ha:
+      enabled: false
+    redis-cluster:
+      enabled: false
+    service:
+      http:
+        annotations:
+          lbipam.cilium.io/sharing-key: gitea-192.168.2.11
+          lbipam.cilium.io/ips: 192.168.2.11
+        type: LoadBalancer
+      ssh:
+        annotations:
+          lbipam.cilium.io/sharing-key: gitea-192.168.2.11
+          lbipam.cilium.io/ips: 192.168.2.11
+        type: LoadBalancer
