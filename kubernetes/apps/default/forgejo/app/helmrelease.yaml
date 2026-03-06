@@ -23,6 +23,8 @@ spec:
         server:
           DOMAIN: git.brenix.com
           ROOT_URL: https://git.brenix.com
+          SSH_PER_WRITE_TIMEOUT: 3600s
+          SSH_PER_WRITE_PER_KB_TIMEOUT: 1s
           SSH_DOMAIN: git.brenix.com
       session:
         PROVIDER: memory
