@@ -38,32 +38,31 @@ spec:
       - name: envoy-internal
         namespace: network
         sectionName: https
-    # tcpRoute:
-    #   enabled: false
-    #   parentRefs:
-    #   - name: envoy-internal
-    #     namespace: network
-    #     sectionName: ssh
-    #   rules:
-    #   - backendRefs:
-    #     - name: forgejo-ssh
-    #       namespace: default
-    #       port: 22
+    tcpRoute:
+      enabled: true
+      parentRefs:
+      - name: envoy-internal
+        namespace: network
+        sectionName: ssh
+      rules:
+      - backendRefs:
+        - name: forgejo-ssh
+          namespace: default
+          port: 22
     postgresql:
       enabled: false
     postgresql-ha:
       enabled: false
     redis-cluster:
       enabled: false
-      service:
-        # http:
-        #   annotations:
-        #     lbipam.cilium.io/sharing-key: gitea-192.168.2.11
-        #     lbipam.cilium.io/ips: 192.168.2.11
-        #   type: LoadBalancer
-        ssh:
-          annotations:
-            lbipam.cilium.io/sharing-key: gitea-192.168.2.11
-            lbipam.cilium.io/ips: 192.168.2.11
-          type: LoadBalancer
-          externalTrafficPolicy: Local
+      # service:
+      #   http:
+      #     annotations:
+      #       lbipam.cilium.io/sharing-key: gitea-192.168.2.11
+      #       lbipam.cilium.io/ips: 192.168.2.11
+      #     type: LoadBalancer
+      #   ssh:
+      #     annotations:
+      #       lbipam.cilium.io/sharing-key: gitea-192.168.2.11
+      #       lbipam.cilium.io/ips: 192.168.2.11
+      #     type: LoadBalancer
