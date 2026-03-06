@@ -38,6 +38,17 @@ spec:
       - name: envoy-internal
         namespace: network
         sectionName: https
+    tcpRoute:
+      enabled: true
+      parentRefs:
+      - name: envoy-internal
+        namespace: network
+        sectionName: ssh
+      rules:
+      - backendRefs:
+        - name: forgejo-ssh
+          namespace: default
+          port: 22
     postgresql:
       enabled: false
     postgresql-ha:
