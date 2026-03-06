@@ -9,6 +9,9 @@ spec:
     name: cilium
   interval: 1h
   values:
+    MTU: 1450
+    pmtuDiscovery:
+      enabled: true
     autoDirectNodeRoutes: true
     bandwidthManager:
       bbr: true
@@ -53,6 +56,7 @@ spec:
     l2announcements:
       enabled: true
     loadBalancer:
+      acceleration: best-effort
       algorithm: maglev
       mode: "dsr"
     localRedirectPolicies:
