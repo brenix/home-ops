@@ -24,9 +24,9 @@ spec:
           DOMAIN: git.brenix.com
           ROOT_URL: https://git.brenix.com
           SSH_DOMAIN: git.brenix.com
-      session:
-        PROVIDER: file
-        PROVIDER_CONFIG: session
+        session:
+          PROVIDER: file
+          PROVIDER_CONFIG: session
     persistence:
       enabled: true
       create: false
