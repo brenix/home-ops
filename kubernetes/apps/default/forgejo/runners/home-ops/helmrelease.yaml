@@ -1,0 +1,14 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: home-ops-runner
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: forgejo-runner
+  interval: 1h
+  values:
+    runner:
+      config:
+        existingInitSecret: forgejo-runner-init
