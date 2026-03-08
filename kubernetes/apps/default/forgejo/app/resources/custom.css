@@ -1,0 +1,19 @@
+:root {
+  --fonts-proportional: 'Verdana', 'Inter', sans-serif !important;
+  --fonts-monospace: 'Monaco', 'Berkeley Mono', 'JetBrains Mono', monospace !important;
+  --fonts-emoji: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji' !important;
+}
+
+.code-view, .markup, code, kbd, pre, samp, .editor-loading {
+  font-size: 13px !important;
+  background: transparent !important;
+}
+
+.monaco-editor, .CodeMirror {
+  font-size: 13px !important;
+}
+
+.repository.file.list #repo-files-table td .truncate {
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
+}

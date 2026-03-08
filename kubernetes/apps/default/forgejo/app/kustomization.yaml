@@ -6,3 +6,10 @@ resources:
 - ./helmrelease.yaml
 - ./pvc-data.yaml
 - ./externalsecret.yaml
+configMapGenerator:
+- name: forgejo-customizations
+  files:
+  - custom.css=./resources/custom.css
+  - header.tmpl=./resources/header.tmpl
+generatorOptions:
+  disableNameSuffixhash: true
