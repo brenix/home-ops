@@ -25,3 +25,7 @@
   font-size: 15px !important;
   line-height: 1.2 !important;
 }
+
+.blob-excerpt {
+  background-color: transparent !important;
+}
