@@ -17,3 +17,11 @@
   padding-top: 3px !important;
   padding-bottom: 3px !important;
 }
+
+.markup,
+.markup p,
+.markup li,
+.markup table {
+  font-size: 15px !important;
+  line-height: 1.2 !important;
+}
