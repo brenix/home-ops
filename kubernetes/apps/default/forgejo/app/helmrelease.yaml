@@ -21,10 +21,6 @@ spec:
           DB_TYPE: sqlite3
         queue:
           TYPE: level
-        metrics:
-          enabled: true
-          serviceMonitor:
-            enabled: true
         server:
           DOMAIN: git.brenix.com
           ROOT_URL: https://git.brenix.com
@@ -36,6 +32,10 @@ spec:
           DEFAULT_THEME: gitea-light
           SHOW_USER_EMAIL: false
           DEFAULT_SHOW_FULL_NAME: true
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
     persistence:
       enabled: true
       create: false
@@ -59,6 +59,8 @@ spec:
         - name: forgejo-ssh
           namespace: default
           port: 22
+    test:
+      enabled: false
     postgresql:
       enabled: false
     postgresql-ha:
