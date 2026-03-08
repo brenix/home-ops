@@ -14,12 +14,17 @@ spec:
       admin:
         existingSecret: gitea-admin
       config:
+        APP_NAME: git
         cache:
           ADAPTER: memory
         database:
           DB_TYPE: sqlite3
         queue:
           TYPE: level
+        metrics:
+          enabled: true
+          serviceMonitor:
+            enabled: true
         server:
           DOMAIN: git.brenix.com
           ROOT_URL: https://git.brenix.com
@@ -27,6 +32,10 @@ spec:
         session:
           PROVIDER: file
           PROVIDER_CONFIG: session
+        ui:
+          DEFAULT_THEME: gitea-light
+          SHOW_USER_EMAIL: false
+          DEFAULT_SHOW_FULL_NAME: true
     persistence:
       enabled: true
       create: false
