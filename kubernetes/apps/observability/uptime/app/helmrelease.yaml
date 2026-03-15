@@ -17,7 +17,7 @@ spec:
           app:
             image:
               repository: docker.io/louislam/uptime-kuma
-              tag: v2.2.1@sha256:d1484595eef21c6fd994e3f930e15a3d65aca6aea60405352705825adb8b1395
+              tag: v2.2.1
             env:
               TZ: "America/Los_Angeles"
             resources:
