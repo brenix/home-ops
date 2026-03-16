@@ -2,6 +2,12 @@
 machine:
   kubelet:
     extraConfig:
+      containerLogMaxFiles: 2
+      containerLogMaxSize: "30Mi"
+      imageGCHighThresholdPercent: 65
+      imageGCLowThresholdPercent: 50
+      imageMaximumGCAge: 24h
+      imageMinimumGCAge: "5m"
       serializeImagePulls: false
     nodeIP:
       validSubnets:
