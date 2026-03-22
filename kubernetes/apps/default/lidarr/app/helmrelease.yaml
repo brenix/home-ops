@@ -77,7 +77,7 @@ spec:
         existingClaim: "{{ .Release.Name }}-data"
       media:
         type: nfs
-        server: truenas.home.arpa
+        server: trinity.home.arpa
         path: /mnt/main/media
         globalMounts:
         - path: /media

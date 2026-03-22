@@ -70,7 +70,7 @@ spec:
         - path: /config/cache
       media:
         type: nfs
-        server: truenas.home.arpa
+        server: trinity.home.arpa
         path: /mnt/main/media
         globalMounts:
         - path: /media

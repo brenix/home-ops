@@ -53,7 +53,7 @@ spec:
         existingClaim: "{{ .Release.Name }}"
       downloads:
         type: nfs
-        server: truenas.home.arpa
+        server: trinity.home.arpa
         path: /mnt/main/media/downloads
         globalMounts:
         - path: /downloads/complete
