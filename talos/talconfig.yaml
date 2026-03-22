@@ -38,7 +38,7 @@ nodes:
     routes:
     - network: "0.0.0.0/0"
       gateway: "192.168.1.1"
-    mtu: 1500
+    mtu: 1420
     vip:
       ip: "192.168.1.50"
 - hostname: "k02"
@@ -58,7 +58,7 @@ nodes:
     routes:
     - network: "0.0.0.0/0"
       gateway: "192.168.1.1"
-    mtu: 1500
+    mtu: 1420
     vip:
       ip: "192.168.1.50"
 - hostname: "k03"
@@ -78,7 +78,7 @@ nodes:
     routes:
     - network: "0.0.0.0/0"
       gateway: "192.168.1.1"
-    mtu: 1500
+    mtu: 1420
     vip:
       ip: "192.168.1.50"
 
