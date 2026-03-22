@@ -38,7 +38,7 @@ spec:
       enabled: false
     ipam:
       mode: kubernetes
-    ipv4NativeRoutingCIDR: 10.244.0.0/16
+    ipv4NativeRoutingCIDR: 10.0.0.0/8
     k8sNetworkPolicy:
       enabled: false
     k8sServiceHost: 127.0.0.1
