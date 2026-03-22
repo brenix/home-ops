@@ -8,3 +8,16 @@ machine:
     - ip: 192.168.1.50
       aliases:
       - k8s.home.arpa
+---
+apiVersion: v1alpha1
+kind: EthernetConfig
+name: eno1
+features:
+  rx-gro: off
+  rx-gro-hw: off
+  tx-checksum-ip-generic: off
+  tx-checksum-ipv4: off
+  tx-checksum-ipv6: off
+  tx-generic-segmentation: off
+  tx-tcp6-segmentation: off
+  tx-tcp-segmentation: off
