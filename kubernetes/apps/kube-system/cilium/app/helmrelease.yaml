@@ -16,7 +16,7 @@ spec:
       bbr: true
     bpf:
       datapathMode: netkit
-      masquerade: false
+      masquerade: true
       preallocateMaps: true
       # distributedLRU:
       #   enabled: true
@@ -43,7 +43,7 @@ spec:
       enabled: false
     ipam:
       mode: kubernetes
-    ipv4NativeRoutingCIDR: 10.96.0.0/12
+    ipv4NativeRoutingCIDR: 10.0.0.0/8
     k8sNetworkPolicy:
       enabled: false
     k8sClusterNetworkPolicy:
