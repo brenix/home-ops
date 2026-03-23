@@ -10,12 +10,13 @@ spec:
   interval: 1h
   values:
     autoDirectNodeRoutes: true
+    direct-routing-skip-unreachable: true
     bandwidthManager:
       enabled: true
       bbr: true
     bpf:
       datapathMode: netkit
-      masquerade: true
+      masquerade: false
       preallocateMaps: true
       # distributedLRU:
       #   enabled: true
@@ -42,7 +43,7 @@ spec:
       enabled: false
     ipam:
       mode: kubernetes
-    ipv4NativeRoutingCIDR: 10.244.0.0/16
+    ipv4NativeRoutingCIDR: 10.96.0.0/12
     k8sNetworkPolicy:
       enabled: false
     k8sClusterNetworkPolicy:
@@ -69,7 +70,7 @@ spec:
       replicas: 2
       rollOutPods: true
     pmtuDiscovery:
-      enabled: true
+      enabled: false
     prometheus:
       enabled: true
       serviceMonitor:
