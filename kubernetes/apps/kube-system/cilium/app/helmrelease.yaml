@@ -48,6 +48,7 @@ spec:
       enabled: false
     k8sClusterNetworkPolicy:
       enabled: false
+    policyEnforcementMode: never
     k8sServiceHost: 127.0.0.1
     k8sServicePort: 7445
     kubeProxyReplacement: true
