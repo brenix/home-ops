@@ -17,11 +17,11 @@ spec:
       datapathMode: netkit
       masquerade: true
       preallocateMaps: true
-      distributedLRU:
-        enabled: true
-      mapDynamicSizeRatio: 0.08
-      monitorAggregation: none
-      monitorInterval: 30s
+      # distributedLRU:
+      #   enabled: true
+      # mapDynamicSizeRatio: 0.08
+      # monitorAggregation: none
+      # monitorInterval: 30s
     bpfClockProbe: true
     bgpControlPlane:
       enabled: true
@@ -34,9 +34,9 @@ spec:
     dashboards:
       enabled: true
     devices: eno+
-    # enableIPv4BIGTCP: true
+    enableIPv4BIGTCP: false
     endpointRoutes:
-      enabled: true
+      enabled: false
     envoy:
       enabled: false
     hubble:
