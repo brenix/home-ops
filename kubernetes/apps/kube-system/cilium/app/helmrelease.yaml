@@ -17,6 +17,12 @@ spec:
       datapathMode: netkit
       masquerade: true
       preallocateMaps: true
+      distributedLRU:
+        enabled: true
+      mapDynamicSizeRatio: 0.08
+      events:
+        monitorInterval: 30s
+    installNoConntrackIptablesRules: true
     bpfClockProbe: true
     bgpControlPlane:
       enabled: true
