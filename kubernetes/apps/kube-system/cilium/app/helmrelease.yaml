@@ -20,9 +20,8 @@ spec:
       distributedLRU:
         enabled: true
       mapDynamicSizeRatio: 0.08
-      events:
-        monitorInterval: 30s
-    installNoConntrackIptablesRules: true
+      monitorAggregation: none
+      monitorInterval: 30s
     bpfClockProbe: true
     bgpControlPlane:
       enabled: true
