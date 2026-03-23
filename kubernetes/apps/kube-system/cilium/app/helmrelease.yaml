@@ -9,7 +9,6 @@ spec:
     name: cilium
   interval: 1h
   values:
-    MTU: 1390
     autoDirectNodeRoutes: true
     bandwidthManager:
       enabled: true
@@ -21,8 +20,7 @@ spec:
       # distributedLRU:
       #   enabled: true
       # mapDynamicSizeRatio: 0.08
-      # monitorAggregation: none
-      # monitorInterval: 30s
+      monitorInterval: 30s
     bpfClockProbe: true
     bgpControlPlane:
       enabled: true
