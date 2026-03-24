@@ -43,6 +43,7 @@ spec:
     ipam:
       mode: kubernetes
     ipv4NativeRoutingCIDR: 10.0.0.0/8
+    iptablesRandomFully: true
     k8sNetworkPolicy:
       enabled: false
     k8sClusterNetworkPolicy:
