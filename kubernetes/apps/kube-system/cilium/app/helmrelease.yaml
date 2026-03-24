@@ -10,7 +10,6 @@ spec:
   interval: 1h
   values:
     autoDirectNodeRoutes: true
-    direct-routing-skip-unreachable: true
     bandwidthManager:
       enabled: true
       bbr: true
@@ -59,7 +58,7 @@ spec:
       algorithm: maglev
       mode: dsr
     localRedirectPolicies:
-      enabled: true
+      enabled: false
     operator:
       dashboards:
         enabled: true
