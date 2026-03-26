@@ -35,7 +35,7 @@ spec:
     devices: eno+
     enableIPv4BIGTCP: false
     endpointRoutes:
-      enabled: false
+      enabled: true
     envoy:
       enabled: false
     hubble:

@@ -28,12 +28,6 @@ metadata:
     advertise: bgp
 spec:
   advertisements:
-  - advertisementType: PodCIDR
-    attributes:
-      communities:
-        standard:
-        - "64512"
-        # localPreference: 99
   - advertisementType: Service
     service:
       addresses:
