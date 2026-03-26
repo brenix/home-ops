@@ -18,6 +18,8 @@ spec:
       masquerade: true
       preallocateMaps: true
       monitorInterval: 30s
+      vlanBypass:
+      - 0
     bpfClockProbe: true
     bgpControlPlane:
       enabled: true
@@ -98,3 +100,4 @@ spec:
     socketLB:
       enabled: true
       hostNamespaceOnly: true
+
