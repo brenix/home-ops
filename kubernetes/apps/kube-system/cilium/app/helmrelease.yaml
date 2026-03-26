@@ -14,12 +14,9 @@ spec:
       enabled: true
       bbr: true
     bpf:
-      datapathMode: netkit
+      datapathMode: netkit-l2
       masquerade: true
       preallocateMaps: true
-      # distributedLRU:
-      #   enabled: true
-      # mapDynamicSizeRatio: 0.08
       monitorInterval: 30s
     bpfClockProbe: true
     bgpControlPlane:
