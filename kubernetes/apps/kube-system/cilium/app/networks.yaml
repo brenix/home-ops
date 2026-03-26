@@ -28,18 +28,16 @@ metadata:
     advertise: bgp
 spec:
   advertisements:
-#  - advertisementType: PodCIDR
-#    attributes:
-#      communities:
-#        standard:
-#        - "64512"
-#      localPreference: 99
+  - advertisementType: PodCIDR
+    attributes:
+      communities:
+        standard:
+        - "64512"
+        # localPreference: 99
   - advertisementType: Service
     service:
       addresses:
       - LoadBalancerIP
-#      - ClusterIP
-#      - ExternalIP
     selector:
       matchExpressions:
       - {key: somekey, operator: NotIn, values: ["never-used-value"]}
