@@ -14,7 +14,7 @@ spec:
       enabled: true
       bbr: true
     bpf:
-      datapathMode: netkit-l2
+      datapathMode: netkit
       masquerade: true
       preallocateMaps: true
       monitorInterval: 30s
