@@ -6,6 +6,19 @@ machine:
     net.core.default_qdisc: fq
     net.core.rmem_max: "7500000" # Cloudflared | QUIC
     net.core.wmem_max: "7500000" # Cloudflared | QUIC
+    net.ipv4.conf.all.accept_local: "1"
+    net.ipv4.conf.all.arp_announce: "2"
+    net.ipv4.conf.all.arp_ignore: "1"
+    net.ipv4.conf.all.rp_filter: "2"
+    net.ipv4.conf.default.accept_local: "1"
+    net.ipv4.conf.default.arp_announce: "2"
+    net.ipv4.conf.default.arp_ignore: "1"
+    net.ipv4.conf.default.rp_filter: "2"
+    net.ipv4.conf.eno1.accept_local: "1"
+    net.ipv4.conf.eno1.arp_announce: "2"
+    net.ipv4.conf.eno1.arp_ignore: "1"
+    net.ipv4.conf.eno1.rp_filter: "2"
+    net.ipv4.ip_forward: "1"
     net.ipv4.neigh.default.gc_thresh1: "4096" # Prevent ARP cache overflows
     net.ipv4.neigh.default.gc_thresh2: "8192" # Prevent ARP cache overflows
     net.ipv4.neigh.default.gc_thresh3: "16384" # Prevent ARP cache overflows
