@@ -9,7 +9,6 @@ spec:
     name: cilium
   interval: 1h
   values:
-    devices: eno1
     autoDirectNodeRoutes: true
     bandwidthManager:
       enabled: false
@@ -30,7 +29,6 @@ spec:
       exclusive: false
     dashboards:
       enabled: true
-    devices: eno+
     enableIPv4BIGTCP: true
     endpointRoutes:
       enabled: true
