@@ -18,8 +18,6 @@ spec:
       masquerade: true
       preallocateMaps: true
       monitorInterval: 30s
-      vlanBypass:
-      - 0
     bpfClockProbe: true
     bgpControlPlane:
       enabled: true
@@ -32,7 +30,7 @@ spec:
     dashboards:
       enabled: true
     devices: eno+
-    enableIPv4BIGTCP: false
+    enableIPv4BIGTCP: true
     endpointRoutes:
       enabled: true
     envoy:
@@ -69,7 +67,7 @@ spec:
       replicas: 1
       rollOutPods: true
     pmtuDiscovery:
-      enabled: false
+      enabled: true
     prometheus:
       enabled: true
       serviceMonitor:

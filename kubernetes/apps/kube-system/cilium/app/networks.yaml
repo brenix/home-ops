@@ -35,10 +35,7 @@ spec:
     selector:
       matchExpressions:
       - {key: somekey, operator: NotIn, values: ["never-used-value"]}
-    attributes:
-      communities:
-        standard:
-        - "64512"
+  - advertisementType: "PodCIDR"
 ---
 apiVersion: cilium.io/v2alpha1
 kind: CiliumBGPPeerConfig
