@@ -30,8 +30,7 @@ nodes:
   talosImageURL: factory.talos.dev/installer/7545b3eddee40c81816011818d49ad819ccd3ff1f489422572a1f9831ca2eb98
   controlPlane: true
   networkInterfaces:
-  - deviceSelector:
-      hardwareAddr: "e8:ff:1e:d7:c7:7d"
+  - interface: eno1
     dhcp: false
     addresses:
     - "192.168.1.51/24"
@@ -50,8 +49,7 @@ nodes:
   talosImageURL: factory.talos.dev/installer/7545b3eddee40c81816011818d49ad819ccd3ff1f489422572a1f9831ca2eb98
   controlPlane: true
   networkInterfaces:
-  - deviceSelector:
-      hardwareAddr: "e8:ff:1e:d7:c7:f9"
+  - interface: eno1
     dhcp: false
     addresses:
     - "192.168.1.52/24"
@@ -70,8 +68,7 @@ nodes:
   talosImageURL: factory.talos.dev/installer/7545b3eddee40c81816011818d49ad819ccd3ff1f489422572a1f9831ca2eb98
   controlPlane: true
   networkInterfaces:
-  - deviceSelector:
-      hardwareAddr: "e8:ff:1e:d7:c7:6f"
+  - interface: eno1
     dhcp: false
     addresses:
     - "192.168.1.53/24"
