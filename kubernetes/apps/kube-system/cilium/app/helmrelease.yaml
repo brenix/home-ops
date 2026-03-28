@@ -9,7 +9,7 @@ spec:
     name: cilium
   interval: 1h
   values:
-    autoDirectNodeRoutes: false
+    autoDirectNodeRoutes: true
     bandwidthManager:
       enabled: false
       bbr: true
