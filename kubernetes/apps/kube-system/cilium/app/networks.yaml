@@ -35,8 +35,7 @@ spec:
     selector:
       matchExpressions:
       - {key: somekey, operator: NotIn, values: ["never-used-value"],}
-
-  # - advertisementType: "PodCIDR"
+  - advertisementType: "PodCIDR"
 ---
 apiVersion: cilium.io/v2alpha1
 kind: CiliumBGPPeerConfig
