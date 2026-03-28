@@ -1,0 +1,19 @@
+---
+machine:
+  type: controlplane
+  nodeLabels:
+    topology.kubernetes.io/zone: m
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+auto: "off"
+hostname: k02
+---
+apiVersion: v1alpha1
+kind: LinkConfig
+name: eno1
+mtu: 1500
+addresses:
+  - address: 192.168.1.52/24
+routes:
+  - gateway: 192.168.1.1
