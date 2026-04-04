@@ -8,3 +8,4 @@ talosconfig
 .venv/
 .DS_Store
 Thumbs.db
+talos/clusterconfig
