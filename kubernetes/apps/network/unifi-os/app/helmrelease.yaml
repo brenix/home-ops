@@ -84,6 +84,7 @@ spec:
             enabled: true
             port: 8443
             protocol: TCP
+            appProtocol: HTTPS
           hotspot:
             enabled: true
             port: 8444
