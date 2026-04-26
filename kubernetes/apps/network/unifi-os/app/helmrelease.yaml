@@ -60,6 +60,7 @@ spec:
         externalTrafficPolicy: Local
         ports:
           webui:
+            enabled: true
             port: 443
             protocol: HTTPS
             appProtocol: https
