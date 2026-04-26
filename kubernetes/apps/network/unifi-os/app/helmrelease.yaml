@@ -84,7 +84,7 @@ spec:
             port: 8443
             protocol: TCP
           hotspot:
-            enabled: tue
+            enabled: true
             port: 8444
             protocol: TCP
           stun:
