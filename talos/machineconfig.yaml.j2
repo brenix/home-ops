@@ -59,7 +59,7 @@ machine:
     diskSelector:
       serial: CT500P3PSSD8
     grubUseUKICmdline: true
-    image: factory.talos.dev/metal-installer/7545b3eddee40c81816011818d49ad819ccd3ff1f489422572a1f9831ca2eb98:v1.12.6
+    image: factory.talos.dev/metal-installer/7545b3eddee40c81816011818d49ad819ccd3ff1f489422572a1f9831ca2eb98:v1.12.7
     wipe: false
   kernel:
     modules:
@@ -75,7 +75,7 @@ machine:
       # imageMaximumGCAge: 24h
       # imageMinimumGCAge: "5m"
       serializeImagePulls: false
-    image: ghcr.io/siderolabs/kubelet:v1.35.3
+    image: ghcr.io/siderolabs/kubelet:v1.35.4
     nodeIP:
       validSubnets:
         - 192.168.1.0/24
@@ -179,11 +179,11 @@ cluster:
       enable-aggregator-routing: "true"
       feature-gates: MutatingAdmissionPolicy=true
       runtime-config: admissionregistration.k8s.io/v1beta1=true
-    image: registry.k8s.io/kube-apiserver:v1.35.3
+    image: registry.k8s.io/kube-apiserver:v1.35.4
   controllerManager:
     extraArgs:
       bind-address: 0.0.0.0
-    image: registry.k8s.io/kube-controller-manager:v1.35.3
+    image: registry.k8s.io/kube-controller-manager:v1.35.4
   coreDNS:
     disabled: true
   etcd:
@@ -196,7 +196,7 @@ cluster:
       listen-metrics-urls: http://0.0.0.0:2381
   proxy:
     disabled: true
-    image: registry.k8s.io/kube-proxy:v1.35.3
+    image: registry.k8s.io/kube-proxy:v1.35.4
   scheduler:
     config:
       apiVersion: kubescheduler.config.k8s.io/v1
@@ -217,7 +217,7 @@ cluster:
                     whenUnsatisfiable: ScheduleAnyway
     extraArgs:
       bind-address: 0.0.0.0
-    image: registry.k8s.io/kube-scheduler:v1.35.3
+    image: registry.k8s.io/kube-scheduler:v1.35.4
   secretboxEncryptionSecret: {{.CLUSTER_SECRETBOXENCRYPTIONSECRET}}
   serviceAccount:
     key: {{.CLUSTER_SERVICEACCOUNT_KEY}}
