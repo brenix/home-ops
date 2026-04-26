@@ -1,0 +1,147 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: unifi-os
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: unifi-os
+  interval: 1h
+  values:
+    controllers:
+      unifi-os:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/lemker/unifi-os-server
+              tag: v1.0.0@sha256:sha256:cbd6edbba4ee68c7c781123df0cee5b3ce943c749d520820f52e21bcb45d18bd
+            env:
+            - name: HOST_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: UOS_SYSTEM_IP
+              value: "unifi-os.brenix.com"
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/ping
+                    port: 80
+                  initialDelaySeconds: 10
+                  periodSeconds: 60
+                  timeoutSeconds: 5
+                  successThreshold: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              privileged: true
+            lifecycle:
+              postStart:
+                exec:
+                  command: ["/bin/bash", "-c", "echo $HOST_IP host.docker.internal >> /etc/hosts"]
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                memory: 4Gi
+        strategy: Recreate
+    service:
+      app:
+        # annotations:
+        #   external-dns.alpha.kubernetes.io/hostname: unifi-os.brenix.com
+        #   external-dns.alpha.kubernetes.io/target: internal.brenix.com
+        #   lbipam.cilium.io/ips: 192.168.2.2
+        externalTrafficPolicy: Local
+        ports:
+          webui:
+            port: 443
+            protocol: HTTPS
+            appProtocol: https
+          rtp:
+            enabled: true
+            port: 5005
+            protocol: TCP
+          id-hub:
+            enabled: true
+            port: 9543
+            protocol: TCP
+          mobile-speedtest:
+            enabled: true
+            port: 6789
+            protocol: TCP
+          communication:
+            enabled: true
+            port: 8080
+            protocol: TCP
+          network-app:
+            enabled: true
+            port: 8443
+            protocol: TCP
+          hotspot:
+            enabled: tue
+            port: 8444
+            protocol: TCP
+          stun:
+            enabled: true
+            port: 3478
+            protocol: UDP
+          syslog:
+            enabled: true
+            port: 5514
+            protocol: UDP
+          discovery:
+            enabled: true
+            port: 10003
+            protocol: UDP
+          site-supervisor:
+            enabled: true
+            port: 11084
+            protocol: TCP
+          aqmps:
+            enabled: true
+            port: 5671
+            protocol: TCP
+          hotspot-redirect-0:
+            enabled: true
+            port: 8880
+            protocol: TCP
+          hotspot-redirect-1:
+            enabled: true
+            port: 8881
+            protocol: TCP
+          hotspot-redirect-2:
+            enabled: true
+            port: 8881
+            protocol: TCP
+        type: LoadBalancer
+    route:
+      app:
+        hostnames:
+        - "{{ .Release.Name }}.brenix.com"
+        parentRefs:
+        - name: envoy-internal
+          namespace: network
+    persistence:
+      data:
+        existingClaim: "{{ .Release.Name }}-data"
+        globalMounts:
+          - path: /persistent
+            subPath: persistent
+          - path: /var/log
+            subPath: log
+          - path: /data
+            subPath: data
+          - path: /srv
+            subPath: srv
+          - path: /var/lib/unifi
+            subPath: unifi
+          - path: /var/lib/mongodb
+            subPath: mongodb
+          - path: /etc/rabbitmq/ssl
+            subPath: rabbitmq
