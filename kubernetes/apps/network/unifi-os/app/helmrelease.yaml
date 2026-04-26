@@ -17,7 +17,7 @@ spec:
           app:
             image:
               repository: ghcr.io/lemker/unifi-os-server
-              tag: v1.0.0@sha256:sha256:cbd6edbba4ee68c7c781123df0cee5b3ce943c749d520820f52e21bcb45d18bd
+              tag: v1.0.0@sha256:cbd6edbba4ee68c7c781123df0cee5b3ce943c749d520820f52e21bcb45d18bd
             env:
             - name: HOST_IP
               valueFrom:
@@ -117,7 +117,7 @@ spec:
             protocol: TCP
           hotspot-redirect-2:
             enabled: true
-            port: 8881
+            port: 8882
             protocol: TCP
         type: LoadBalancer
     route:
