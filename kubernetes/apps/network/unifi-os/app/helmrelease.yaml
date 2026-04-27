@@ -24,7 +24,7 @@ spec:
                 fieldRef:
                   fieldPath: status.hostIP
             - name: UOS_SYSTEM_IP
-              value: "unifi-os.brenix.com"
+              value: "unifi.brenix.com"
             probes:
               liveness: &probes
                 enabled: true
@@ -53,10 +53,10 @@ spec:
         strategy: Recreate
     service:
       app:
-        # annotations:
-        #   external-dns.alpha.kubernetes.io/hostname: unifi-os.brenix.com
-        #   external-dns.alpha.kubernetes.io/target: internal.brenix.com
-        #   lbipam.cilium.io/ips: 192.168.2.2
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: unifi.brenix.com
+          external-dns.alpha.kubernetes.io/target: internal.brenix.com
+          lbipam.cilium.io/ips: 192.168.2.2
         externalTrafficPolicy: Local
         ports:
           webui:
@@ -125,6 +125,7 @@ spec:
     route:
       app:
         hostnames:
+        - "unifi.brenix.com"
         - "{{ .Release.Name }}.brenix.com"
         parentRefs:
         - name: envoy-internal
