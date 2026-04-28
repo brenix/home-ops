@@ -4,14 +4,24 @@
     "config:recommended",
     "docker:enableMajor",
     "helpers:pinGitHubActionDigests",
+    "github>brenix/home-ops//.renovate/autoMerge.json5",
+    "github>brenix/home-ops//.renovate/changelogs.json5",
+    "github>brenix/home-ops//.renovate/customManagers.json5",
+    "github>brenix/home-ops//.renovate/grafanaDashboards.json5",
+    "github>brenix/home-ops//.renovate/groups.json5",
+    "github>brenix/home-ops//.renovate/labels.json5",
+    "github>brenix/home-ops//.renovate/overrides.json5",
+    "github>brenix/home-ops//.renovate/semanticCommits.json5",
     ":automergeBranch",
     ":dependencyDashboard",
     ":disableRateLimiting",
     ":semanticCommits",
   ],
-  dependencyDashboard: true,
   dependencyDashboardTitle: "Renovate Dashboard :robot:",
-  ignorePaths: ["**/*.sops.*"],
+  ignorePaths: [
+    "**/*.sops.*",
+    "**/resources/**",
+  ],
   flux: {
     managerFilePatterns: ["/\\.yaml(?:\\.j2)?$/"],
   },
@@ -21,164 +31,4 @@
   kubernetes: {
     managerFilePatterns: ["/\\.yaml(?:\\.j2)?$/"],
   },
-  packageRules: [
-    {
-      description: "Override Helmfile Dependency Name",
-      matchDatasources: ["docker"],
-      matchManagers: ["helmfile"],
-      overrideDepName: "{{packageName}}",
-    },
-    {
-      description: "Kubernetes Group",
-      groupName: "kubernetes",
-      matchDatasources: ["docker"],
-      matchPackageNames: [
-        "/kube-apiserver/",
-        "/kube-controller-manager/",
-        "/kube-proxy/",
-        "/kube-scheduler/",
-        "/kubelet/",
-      ],
-      group: {
-        commitMessageTopic: "{{{groupName}}} group",
-      },
-      minimumGroupSize: 5,
-    },
-    {
-      description: "Flux Operator Group",
-      groupName: "flux-operator",
-      matchDatasources: ["docker"],
-      matchPackageNames: ["/flux-operator/", "/flux-instance/", "/flux-operator-manifests/"],
-      group: {
-        commitMessageTopic: "{{{groupName}}} group",
-      },
-      minimumGroupSize: 3,
-    },
-    {
-      description: "Auto-merge GitHub Actions",
-      matchManagers: ["github-actions"],
-      automerge: true,
-      automergeType: "branch",
-      matchUpdateTypes: ["minor", "patch", "digest"],
-      minimumReleaseAge: "0 days",
-      ignoreTests: true,
-    },
-    {
-      description: "Auto-merge Mise Tools",
-      matchManagers: ["mise"],
-      automerge: true,
-      automergeType: "branch",
-      matchUpdateTypes: ["minor", "patch"],
-      ignoreTests: true,
-    },
-    {
-      matchUpdateTypes: ["major"],
-      semanticCommitType: "feat",
-      commitMessagePrefix: "{{semanticCommitType}}({{semanticCommitScope}})!:",
-      commitMessageExtra: "( {{currentVersion}} ➔ {{newVersion}} )",
-    },
-    {
-      matchUpdateTypes: ["minor"],
-      semanticCommitType: "feat",
-      commitMessageExtra: "( {{currentVersion}} ➔ {{newVersion}} )",
-    },
-    {
-      matchUpdateTypes: ["patch"],
-      semanticCommitType: "fix",
-      commitMessageExtra: "( {{currentVersion}} ➔ {{newVersion}} )",
-    },
-    {
-      matchUpdateTypes: ["digest"],
-      semanticCommitType: "chore",
-      commitMessageExtra: "( {{currentDigestShort}} ➔ {{newDigestShort}} )",
-    },
-    {
-      matchDatasources: ["docker"],
-      semanticCommitScope: "container",
-      commitMessageTopic: "image {{depName}}",
-    },
-    {
-      matchDatasources: ["helm"],
-      semanticCommitScope: "helm",
-      commitMessageTopic: "chart {{depName}}",
-    },
-    {
-      matchManagers: ["github-actions"],
-      semanticCommitType: "ci",
-      semanticCommitScope: "github-action",
-      commitMessageTopic: "action {{depName}}",
-    },
-    {
-      matchDatasources: ["github-releases"],
-      semanticCommitScope: "github-release",
-      commitMessageTopic: "release {{depName}}",
-    },
-    {
-      matchManagers: ["mise"],
-      semanticCommitScope: "mise",
-      commitMessageTopic: "tool {{depName}}",
-    },
-    {
-      matchUpdateTypes: ["major"],
-      labels: ["type/major"],
-    },
-    {
-      matchUpdateTypes: ["minor"],
-      labels: ["type/minor"],
-    },
-    {
-      matchUpdateTypes: ["patch"],
-      labels: ["type/patch"],
-    },
-    {
-      matchUpdateTypes: ["digest"],
-      labels: ["type/digest"],
-    },
-    {
-      matchDatasources: ["docker"],
-      addLabels: ["renovate/container"],
-    },
-    {
-      matchDatasources: ["helm"],
-      addLabels: ["renovate/helm"],
-    },
-    {
-      matchManagers: ["github-actions"],
-      addLabels: ["renovate/github-action"],
-    },
-    {
-      matchDatasources: ["github-releases"],
-      addLabels: ["renovate/github-release"],
-    },
-  ],
-  customManagers: [
-    {
-      customType: "regex",
-      description: "Process annotated dependencies",
-      managerFilePatterns: [
-        "/\\.env(?:\\.j2)?$/",
-        "/\\.sh(?:\\.j2)?$/",
-        "/\\.yaml(?:\\.j2)?$/",
-      ],
-      matchStrings: [
-        // # renovate: datasource=github-releases depName=foo/bar
-        // foobar_version: v1.0.0
-        // # renovate: datasource=docker depName=ghcr.io/foo/bar
-        // FOOBAR_VERSION=v1.0.0
-        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n.+(:\\s|=)(&\\S+\\s)?(?<currentValue>\\S+)",
-      ],
-      datasourceTemplate: "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
-    },
-    {
-      customType: "regex",
-      description: "Process OCI dependencies",
-      managerFilePatterns: [
-        "/\\.yaml(?:\\.j2)?$/",
-      ],
-      matchStrings: [
-        "oci://(?<depName>[^:]+):(?<currentValue>\\S+)",
-      ],
-      datasourceTemplate: "docker",
-    },
-  ],
 }

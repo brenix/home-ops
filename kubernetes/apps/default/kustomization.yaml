@@ -10,7 +10,7 @@ resources:
 - ./jellyfin/ks.yaml
 # - ./lidarr/ks.yaml
 - ./linkding/ks.yaml
-- ./mongodb/ks.yaml
+# - ./mongodb/ks.yaml
 - ./mumble/ks.yaml
 - ./navidrome/ks.yaml
 - ./prowlarr/ks.yaml
@@ -20,4 +20,4 @@ resources:
 - ./seerr/ks.yaml
 - ./sonarr/ks.yaml
 - ./stirling-pdf/ks.yaml
-- ./unifi/ks.yaml
+# - ./unifi/ks.yaml
