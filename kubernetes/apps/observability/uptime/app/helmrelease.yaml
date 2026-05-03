@@ -17,7 +17,7 @@ spec:
           app:
             image:
               repository: ghcr.io/louislam/uptime-kuma
-              tag: 2.3.0@sha256:2987bbbdbebfb123ab60fbc7fc4e1e49907d844c7a0df1648996d4b191fc95df
+              tag: 2.3.2@sha256:dbede95c52962acf5dedc67b46d98fe9ad366c708aebc5e0ee70ca5245181482
             env:
               PUID: 1000
               PGID: 1000
