@@ -66,4 +66,4 @@ view-secret namespace secret:
 
 [doc('Render a local flux kustomization')]
 render-local-ks ns ks:
-    flux-local build ks --namespace "{{ ns }}" --path "{{ kubernetes_dir }}/flux/cluster" "{{ ks }}"
+    flate build ks --namespace "{{ ns }}" --path "{{ justfile_directory() }}/kubernetes" --output yaml "{{ ks }}"
