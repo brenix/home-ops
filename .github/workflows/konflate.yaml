@@ -14,6 +14,8 @@ concurrency:
 
 permissions:
   contents: read
+  pull-requests: write
+  issues: write
 
 env:
   KONFLATE_DOMAIN: konflate.brenix.com
@@ -47,6 +49,7 @@ jobs:
         id: find-comment
         uses: peter-evans/find-comment@b30e6a3c0ed37e7c023ccd3f1db5c6c0b0c23aad # v4.0.0
         with:
+          token: ${{ github.token }}
           issue-number: ${{ github.event.pull_request.number }}
           body-includes: "<!-- konflate"
 
@@ -54,6 +57,7 @@ jobs:
         if: ${{ steps.fetch.outputs.ready == 'true' }}
         uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5.0.0
         with:
+          token: ${{ github.token }}
           issue-number: ${{ github.event.pull_request.number }}
           comment-id: ${{ steps.find-comment.outputs.comment-id }}
           body-path: summary.md
