@@ -11,6 +11,9 @@ spec:
   values:
     config:
       repo: github://brenix/home-ops
+      statusChecks: true
+      prComments: true
+      publicUrl: https://{{ .Release.Name }}.brenix.com
     secret:
       existingSecret: konflate-webhook-token-secret
     httpRoute:
