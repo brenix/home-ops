@@ -58,6 +58,11 @@ spec:
         server: trinity.home.arpa
         path: /mnt/main/media/downloads
         globalMounts:
-        - path: /downloads
+        - path: /downloads/complete
+          subPath: complete
+      incomplete:
+        type: emptyDir
+        globalMounts:
+        - path: /downloads/incomplete
       tmp:
         type: emptyDir
