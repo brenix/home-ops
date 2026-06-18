@@ -20,6 +20,8 @@ sonarr:
     - trash_id: 72dae194fc92bf828f32cde7744e51a1 # WEB-1080p
       reset_unmatched_scores:
         enabled: true
+      upgrade:
+        allowed: false
     custom_formats:
     - trash_ids:
       - cddfb4e32db826151d97352b8e37c648 # x264
@@ -84,6 +86,8 @@ radarr:
       name: SQP-1 (1080p)
       reset_unmatched_scores:
         enabled: true
+      upgrade:
+        allowed: false
     custom_formats:
     - trash_ids:
       - 2899d84dc9372de3408e6d8cc18e9666 # x264
