@@ -17,7 +17,7 @@ spec:
           app:
             image:
               repository: ghcr.io/navidrome/navidrome
-              tag: 0.62.0@sha256:6f597ad2238475c63b2d43b835ea8db99dd7ff669029b0557132341270521ce8
+              tag: 0.63.0@sha256:e9516258a935cf9ddfcac853cf23800506623c1040ee0c740bd7d5765d2dc017
             env:
               ND_ENABLEINSIGHTSCOLLECTOR: "false"
               ND_DATAFOLDER: /data
