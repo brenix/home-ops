@@ -22,7 +22,7 @@ spec:
     kubectl:
       image:
         repository: docker.io/alpine/kubectl
-        tag: 1.36.2
+        tag: 1.36.3
     metrics:
       serviceMonitor:
         enabled: true
