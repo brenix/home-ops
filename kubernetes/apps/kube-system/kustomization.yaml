@@ -10,6 +10,7 @@ resources:
 - ./coredns/ks.yaml
 - ./k8s-digester/ks.yaml
 - ./metrics-server/ks.yaml
+- ./ocharted/ks.yaml
 - ./reloader/ks.yaml
 - ./snapshot-controller/ks.yaml
 - ./spegel/ks.yaml
