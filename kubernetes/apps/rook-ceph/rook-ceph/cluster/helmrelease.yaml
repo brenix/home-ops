@@ -35,6 +35,8 @@ spec:
       crashCollector:
         disable: true
       csi:
+        cephfs:
+          kernelMountOptions: ms_mode=prefer-crc
         readAffinity:
           enabled: true
       dashboard:
