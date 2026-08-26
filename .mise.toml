@@ -9,7 +9,7 @@ TALOSCONFIG = "{{config_root}}/talosconfig"
 
 [tools]
 age = "1.3"
-cilium-cli = "0.19"
+cilium-cli = "0.20.0"
 dyff = "latest"
 flux2 = "2.9.4"
 "github:mitsuhiko/minijinja" = "2.24.0"
