@@ -11,11 +11,6 @@ machine:
     apidCheckExtKeyUsage: true
     diskQuotaSupport: true
     rbac: true
-  install:
-    diskSelector:
-      serial: CT500P3PSSD8
-    image: factory.talos.dev/metal-installer/{{ "{{ schematic }}" }}:v1.14.0
-    wipe: false
   network:
     extraHostEntries:
       - ip: 192.168.1.50
@@ -31,21 +26,31 @@ cluster:
   clusterName: kubernetes
   controlPlane:
     endpoint: https://192.168.1.50:6443
-  discovery:
-    enabled: true
-    registries:
-      kubernetes:
-        disabled: true
-      service:
-        disabled: false
-  id: {{.CLUSTER_ID}}
-  secret: {{.CLUSTER_SECRET}}
   token: {{.CLUSTER_TOKEN}}
 ---
 apiVersion: v1alpha1
 kind: Layer2VIPConfig
 name: 192.168.1.50
 link: eno1
+---
+apiVersion: v1alpha1
+kind: DiscoveryServiceConfig
+name: default
+endpoint: https://discovery.talos.dev/
+---
+apiVersion: v1alpha1
+kind: DiscoveryIdentityConfig
+clusterID: {{.CLUSTER_ID}}
+clusterSecret: {{.CLUSTER_SECRET}}
+---
+apiVersion: v1alpha1
+kind: UnattendedInstallConfig
+installer:
+  image: factory.talos.dev/metal-installer/{{ "{{ schematic }}" }}:v1.14.0
+provisioning:
+  diskSelector:
+    match: disk.serial == "CT500P3PSSD8"
+  wipe: false
 ---
 apiVersion: v1alpha1
 kind: ResolverConfig
@@ -61,6 +66,14 @@ hostDNS:
 apiVersion: v1alpha1
 kind: KernelModuleConfig
 name: nbd
+---
+apiVersion: v1alpha1
+kind: FilesystemTrimConfig
+interval: 168h0m0s
+---
+apiVersion: v1alpha1
+kind: FilesystemScrubConfig
+interval: 168h0m0s
 ---
 apiVersion: v1alpha1
 kind: SysctlConfig
@@ -140,7 +153,13 @@ labels:
 apiVersion: v1alpha1
 kind: KubeletConfig
 config:
+  crashLoopBackOff:
+    maxContainerRestartPeriod: 60s
+  imageMaximumGCAge: 168h
+  maxParallelImagePulls: 3
   serializeImagePulls: false
+  shutdownGracePeriod: 90s
+  shutdownGracePeriodCriticalPods: 60s
 defaultRuntimeSeccompProfileEnabled: true
 image: ghcr.io/siderolabs/kubelet:v1.37.0
 ---
