@@ -1,13 +1,12 @@
 ---
-machine:
-  type: controlplane
-  nodeLabels:
-    topology.kubernetes.io/zone: m
----
 apiVersion: v1alpha1
 kind: HostnameConfig
-auto: "off"
 hostname: k01
+---
+apiVersion: v1alpha1
+kind: KubeNodeConfig
+labels:
+  topology.kubernetes.io/zone: m
 ---
 apiVersion: v1alpha1
 kind: LinkConfig
