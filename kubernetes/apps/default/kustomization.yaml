@@ -19,5 +19,5 @@ resources:
 - ./sabnzbd/ks.yaml
 - ./seerr/ks.yaml
 - ./sonarr/ks.yaml
-- ./stirling-pdf/ks.yaml
+# - ./stirling-pdf/ks.yaml
 # - ./unifi/ks.yaml
