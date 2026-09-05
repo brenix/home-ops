@@ -25,6 +25,11 @@ cluster:
     key: {{.CLUSTER_SERVICEACCOUNT_KEY}}
 ---
 apiVersion: v1alpha1
+kind: KubeNodeConfig
+labels:
+  node-role.kubernetes.io/control-plane: ""
+---
+apiVersion: v1alpha1
 kind: KubeAPIServerConfig
 certExtraSANs:
   - 127.0.0.1
