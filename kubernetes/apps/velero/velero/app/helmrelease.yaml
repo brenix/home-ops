@@ -14,7 +14,7 @@ spec:
       tag: v1.18.4@sha256:c89fb5b6d1fd6afd368e0f483e6f5555fd62851a1eada8ac5c72482e674ca17b
     initContainers:
     - name: velero-plugin-for-aws
-      image: velero/velero-plugin-for-aws:v1.14.3
+      image: velero/velero-plugin-for-aws:v1.14.4
       volumeMounts:
       - mountPath: /target
         name: plugins
