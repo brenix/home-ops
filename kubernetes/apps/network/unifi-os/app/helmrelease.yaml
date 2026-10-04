@@ -54,8 +54,8 @@ spec:
     service:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: unifi.brenix.com
-          external-dns.alpha.kubernetes.io/target: internal.brenix.com
+          external-dns.kubernetes.io/hostname: unifi.brenix.com
+          external-dns.kubernetes.io/target: internal.brenix.com
           lbipam.cilium.io/ips: 192.168.2.2
         externalTrafficPolicy: Local
         ports:

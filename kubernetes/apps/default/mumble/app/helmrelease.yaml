@@ -36,8 +36,8 @@ spec:
     service:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: mumble.brenix.com
-          external-dns.alpha.kubernetes.io/target: external.brenix.com
+          external-dns.kubernetes.io/hostname: mumble.brenix.com
+          external-dns.kubernetes.io/target: external.brenix.com
           lbipam.cilium.io/ips: 192.168.2.17
         externalTrafficPolicy: Local
         ports:

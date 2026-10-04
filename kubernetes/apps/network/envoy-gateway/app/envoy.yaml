@@ -18,16 +18,16 @@ spec:
             requests:
               cpu: 100m
             limits:
-              memory: 1Gi
+              memory: 2Gi
       envoyService:
-        externalTrafficPolicy: Cluster
+        externalTrafficPolicy: Local
   shutdown:
     drainTimeout: 180s
   telemetry:
     metrics:
       prometheus:
         compression:
-          type: Gzip
+          type: Zstd
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: GatewayClass
@@ -46,12 +46,12 @@ kind: Gateway
 metadata:
   name: envoy-external
   annotations:
-    external-dns.alpha.kubernetes.io/target: external.brenix.com
+    external-dns.kubernetes.io/target: external.brenix.com
 spec:
   gatewayClassName: envoy
   infrastructure:
     annotations:
-      external-dns.alpha.kubernetes.io/hostname: external.brenix.com
+      external-dns.kubernetes.io/hostname: external.brenix.com
       lbipam.cilium.io/ips: "192.168.2.20"
   listeners:
   - name: http
@@ -76,12 +76,12 @@ kind: Gateway
 metadata:
   name: envoy-internal
   annotations:
-    external-dns.alpha.kubernetes.io/target: internal.brenix.com
+    external-dns.kubernetes.io/target: internal.brenix.com
 spec:
   gatewayClassName: envoy
   infrastructure:
     annotations:
-      external-dns.alpha.kubernetes.io/hostname: internal.brenix.com
+      external-dns.kubernetes.io/hostname: internal.brenix.com
       lbipam.cilium.io/ips: "192.168.2.21"
   listeners:
   - name: http
@@ -112,18 +112,30 @@ kind: BackendTrafficPolicy
 metadata:
   name: envoy
 spec:
-  compression:
-  - type: Brotli
-  - type: Gzip
-  connection:
-    bufferLimit: 8Mi
+  compressor:
+    - type: Zstd
+      zstd: {}
+    - type: Brotli
+      brotli: {}
+    - type: Gzip
+      gzip: {}
+  retry:
+    numRetries: 2
+    retryOn:
+      triggers:
+        - reset-before-request
   targetSelectors:
-  - group: gateway.networking.k8s.io
-    kind: Gateway
-  tcpKeepalive: {}
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+  tcpKeepalive:
+    idleTime: 60s
+    interval: 10s
+    probes: 3
   timeout:
     http:
+      connectionIdleTimeout: 4s
       requestTimeout: 0s
+      streamIdleTimeout: 1h
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: ClientTrafficPolicy
@@ -134,33 +146,31 @@ spec:
     xForwardedFor:
       trustedCIDRs:
       - "10.244.0.0/16"
-  connection:
-    bufferLimit: 4Mi
-    maxAcceptPerSocketEvent: 0
   http2:
-    initialStreamWindowSize: 512Ki
-    initialConnectionWindowSize: 8Mi
     onInvalidMessage: TerminateStream
   http3: {}
   targetSelectors:
-  - group: gateway.networking.k8s.io
-    kind: Gateway
-  tcpKeepalive: {}
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+  tcpKeepalive:
+    idleTime: 60s
+    interval: 10s
+    probes: 3
   timeout:
     http:
-      requestReceivedTimeout: 0s
+      idleTimeout: 600s
   tls:
     minVersion: "1.2"
     alpnProtocols:
-    - h2
-    - http/1.1
+      - h2
+      - http/1.1
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: https-redirect
   annotations:
-    external-dns.alpha.kubernetes.io/controller: none
+    external-dns.kubernetes.io/controller: none
 spec:
   parentRefs:
   - name: envoy-external
