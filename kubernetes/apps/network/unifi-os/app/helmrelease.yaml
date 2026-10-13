@@ -17,7 +17,7 @@ spec:
           app:
             image:
               repository: ghcr.io/lemker/unifi-os-server
-              tag: v1.7.0@sha256:a5922924d7408413ebb3312adbbd650a6eef646e22b626899c092970b72322bb
+              tag: v1.8.0@sha256:bc787602e0e358c7ab3492ccb913e1787c1721fe78f8fff355bb3d8b83c6b32b
             env:
             - name: HOST_IP
               valueFrom:
