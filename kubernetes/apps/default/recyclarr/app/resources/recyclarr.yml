@@ -43,7 +43,7 @@ sonarr:
       - 1bef6c151fa35093015b0bfef18279e5 # 2160p
       assign_scores_to:
       - name: WEB-1080p
-        score: -2000
+        score: -10000
     - trash_ids:
       - 69aa1e159f97d860440b04cd6d590c4f # Language: Not English
       assign_scores_to:
