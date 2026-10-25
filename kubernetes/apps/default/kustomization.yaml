@@ -20,4 +20,5 @@ resources:
 - ./seerr/ks.yaml
 - ./sonarr/ks.yaml
 - ./stirling-pdf/ks.yaml
+- ./tandoor/ks.yaml
 # - ./unifi/ks.yaml
