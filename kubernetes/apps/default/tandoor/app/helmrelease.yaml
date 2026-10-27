@@ -38,7 +38,7 @@ spec:
           app:
             image:
               repository: ghcr.io/tandoorrecipes/recipes
-              tag: 2.7.1@sha256:5a919357782fa590bcfe609b6b8f9719b42159c281ac56ca7424170b3e2f37e3
+              tag: 2.7.2@sha256:04468a89f352846bc6e584aa173a94f992011da590e730253e7905e212ca4eda
             envFrom:
               - externalSecretRef:
                   identifier: tandoor
