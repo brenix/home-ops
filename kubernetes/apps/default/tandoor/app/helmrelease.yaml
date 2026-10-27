@@ -79,7 +79,7 @@ spec:
           nginx:
             image:
               repository: ghcr.io/nginx/nginx-unprivileged
-              tag: 1.31.8-alpine@sha256:cd44aecfe0a92dddd3474958b857a13c9a82b10710f6c8dbbc865f36f029e156
+              tag: 1.31.8-alpine@sha256:b452e9c4c9676bddf0ce1d5ccf7872c409215cfee74b76d889e4850ba6a9ac73
             resources:
               requests:
                 cpu: 100m
