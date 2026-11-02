@@ -11,4 +11,3 @@ resources:
 - ./kube-prometheus-stack/ks.yaml
 - ./ping-exporter/ks.yaml
 - ./silence-operator/ks.yaml
-# - ./uptime/ks.yaml

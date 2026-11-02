@@ -8,9 +8,7 @@ resources:
 - ./namespace.yaml
 - ./forgejo/ks.yaml
 - ./jellyfin/ks.yaml
-# - ./lidarr/ks.yaml
 - ./linkding/ks.yaml
-# - ./mongodb/ks.yaml
 - ./mumble/ks.yaml
 - ./navidrome/ks.yaml
 - ./prowlarr/ks.yaml
@@ -21,4 +19,3 @@ resources:
 - ./sonarr/ks.yaml
 - ./stirling-pdf/ks.yaml
 - ./tandoor/ks.yaml
-# - ./unifi/ks.yaml
