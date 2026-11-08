@@ -17,7 +17,7 @@ spec:
           app:
             image:
               repository: ghcr.io/mumble-voip/mumble-server
-              tag: v1.6.870@sha256:465fa933b0d9e814eb32e3f9da2ace56130f3f5df435c34c9e062deecccfcc78
+              tag: v1.6.1001@sha256:adfe96f959d8f29450a535430347efcfb9386e58fd079593cfa5e5fa875b970f
             env:
               MUMBLE_ACCEPT_UNKNOWN_SETTINGS: false
               MUMBLE_VERBOSE: false
