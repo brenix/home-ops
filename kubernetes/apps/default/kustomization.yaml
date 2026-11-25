@@ -11,6 +11,7 @@ resources:
 - ./linkding/ks.yaml
 - ./mumble/ks.yaml
 - ./navidrome/ks.yaml
+- ./pacoloco/ks.yaml
 - ./prowlarr/ks.yaml
 - ./radarr/ks.yaml
 - ./recyclarr/ks.yaml

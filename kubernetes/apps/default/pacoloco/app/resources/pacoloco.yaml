@@ -1,0 +1,33 @@
+---
+port: 9129
+cache_dir: /var/cache/pacoloco
+download_timeout: 3600
+purge_files_after: 2592000 # 30 days
+set_timestamp_to_logs: true
+repos:
+  archlinux:
+    urls:
+      - https://us.mirrors.cicku.me/archlinux
+      - https://mirrors.logal.dev/archlinux
+      - https://fastly.mirror.pkgbuild.com
+      - https://geo.mirror.pkgbuild.com
+      - https://arch.mirror.constant.com
+      - https://mirror.rackspace.com/archlinux
+      - https://mirrors.teamcloud.am/archlinux
+      - https://ftpmirror.infania.net/mirror/archlinux
+  cachyos:
+    urls: &cachyos-urls
+      - https://mirror5.krfoss.org/cachyos/repo
+      - https://mirror6.krfoss.org/cachyos/repo
+      - https://mirror.krfoss.org/cachyos/repo
+      - https://cdn77.cachyos.org/repo
+      - https://us-mnz.soulharsh007.dev/cachyos/repo
+      - https://mirrors.lansing2600.org/cachyos/repo
+      - https://cdn.lansing2600.org/cachyos/repo
+  cachyos-v3:
+    urls: *cachyos-urls
+  cachyos-v4:
+    urls: *cachyos-urls
+prefetch:
+  cron: 0 0 3 * * * * # every day at 03:00
+  ttl_unaccessed_in_days: 30
